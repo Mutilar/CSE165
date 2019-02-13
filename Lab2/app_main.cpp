@@ -55,7 +55,7 @@ void appDrawScene()
         glEnd();
         glBegin(GL_LINES);
         glVertex3f(-1, spacing, 1);
-        glVertex3f(1, -spacing, 1);
+        glVertex3f(1, spacing, 1);
         glEnd();
     }
     double centerX, centerY;
@@ -103,7 +103,7 @@ void appDrawScene()
             glVertex3f(center, 1, 1);
             glEnd();
             //win
-
+	}
             if (board[0][i] != 0 && board[0][i] == board[1][i] && board[1][i] == board[2][i])
             {
                 glBegin(GL_LINES);
@@ -112,7 +112,7 @@ void appDrawScene()
                 glEnd();
                 //win
             }
-        }
+    }
         if (board[0][0] != 0 && board[0][0] == board[1][1] && board[1][1] == board[2][2])
         {
             glBegin(GL_LINES);
@@ -129,16 +129,18 @@ void appDrawScene()
             glEnd();
             //win
         }
-
-        if (singlePlayer && turnNumber % 2 == 0)
+	bool placed = false;
+        if (singlePlayer && (turnNumber % 2 == 1))
         {
             for (int x = 0; x < 3; x++)
             {
                 for (int y = 0; y < 3; y++)
                 {
-                    if (board[x][y] == 0)
+                    if (board[x][y] == 0 && placed == false)
                     {
                         board[x][y] = (turnNumber++) % 2 + 1;
+			placed = true;
+			break;
                     }
                 }
             }
@@ -238,8 +240,11 @@ void appDrawScene()
     //	s 	 - state, either mouse-up or mouse-down
     //	x, y - coordinates of the mouse when click occured
     //-------------------------------------------------------
-    void appMouseFunc(int b, int s, int x, int y)
+    void appMouseFunc(int button, int state, int x, int y)
     {
+        if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+        
+    
         // Convert from Window to Scene coordinates
         float mx = (float)x;
         float my = (float)y;
@@ -254,13 +259,15 @@ void appDrawScene()
         my += 1.5;               //my is from 0 to 3
         int y_index = floor(my); //0-1 == 0, 1-2 == 1, 2-3 == 2 (index y of 3x3 matrix)
 
-        board[x_index][y_index] = (turnNumber++ % 2) + 1; //Odd turns == Xs, even turns == Os
-
-        appDrawScene();
-
+	if (board[x_index][y_index] == 0) {
+	  board[x_index][y_index] = (turnNumber++ % 2) + 1; //Odd turns == Xs, even turns == Os
+	
+	  appDrawScene();
+	}
         // Redraw the scene by calling appDrawScene above
         // so that the point we added above will get painted
         glutPostRedisplay();
+    }
     }
 
     //-------------------------------------------------------
