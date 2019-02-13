@@ -14,6 +14,11 @@ using namespace std;
 // Store the width and height of the window
 int width = 640, height = 640;
 
+int board[3][3];
+
+bool singlePlayer = true;
+int turnNumber = 0;
+
 //-------------------------------------------------------
 // A function to draw the scene
 //-------------------------------------------------------
@@ -57,36 +62,61 @@ void appDrawScene()
         glVertex3f(1, -spacing, 1);
         glEnd();
     }
+    double centerX, centerY;
+    for (int x = 0; x < 3; x++)
+    {
+        centerX = x - 1; //-1, 0, 1
+        centerX *= .66;  //-.66, 0, .66
+        for (int y = 0; y < 3; y++)
+        {
+            centerY = y - 1; //-1, 0, 1
+            centerY *= .66;  //-.66, 0, .66
+            if (board[x][y] == 1)
+            { //Draw O
+                glBegin(GL_POLYGON);
+                for (theta = 0; theta < 2.0 * M_PI; theta += thetaInc)
+                {
+                    glVertex2f((radius)*cos(theta) + centerX, (radius)*sin(theta) + centerY);
+                }
+                glEnd();
+            }
+            if (board[x][y] == 2)
+            { //Draw X
+                glBegin(GL_LINES);
+                glVertex3f(centerX - radius, centerY - radius, 1);
+                glVertex3f(centerX + radius, centerY + radius, 1);
+                glEnd();
+                glBegin(GL_LINES);
+                glVertex3f(centerX + radius, centerY - radius, 1);
+                glVertex3f(centerX - radius, centerY + radius, 1);
+                glEnd();
+            }
+        }
+    }
+    //check for a win::
+    for (int i = 0; i < 3; i++)
+    {
+        if (board[i][0] == board[i][1] == board[i][2])
+        {
+            //win
+        }
+        if (board[0][i] == board[1][i] == board[2][i])
+        {
+            //win
+        }
+    }
+    if (board[0][0] == board[1][1] == board[2][2])
+    {
+        //win
+    }
+    if (board[0][2] == board[1][1] == board[2][0])
+    {
+        //win
+    }
 
-    // glBegin(GL_POLYGON);
-    // for (theta = M_PI * 3 / 2; theta < 5.0 / 2.0 * M_PI; theta += thetaInc)
-    // {
-    //     glVertex2f((radius / 1.25) * cos(theta) + xOffset, (radius / 1.25) * sin(theta) + yOffset + radius);
-    // }
-    // for (theta = M_PI * 3 / 2; theta < 5.0 / 2.0 * M_PI; theta += thetaInc)
-    // {
-    //     glVertex2f((radius / 1.25) * cos(theta) + xOffset, (radius / 1.25) * sin(theta) + yOffset - radius);
-    // }
-    // glEnd();
-
-    // // B Colored Space
-    // glColor3f(0.0, 1.0, 0.0);
-    // glBegin(GL_POLYGON);
-    // for (theta = M_PI * 3 / 2; theta < 5.0 / 2.0 * M_PI; theta += thetaInc)
-    // {
-    //     glVertex2f(radius * cos(theta) + xOffset, radius * sin(theta) + yOffset + radius);
-    // }
-    // for (theta = M_PI * 3 / 2; theta < 5.0 / 2.0 * M_PI; theta += thetaInc)
-    // {
-    //     glVertex2f(radius * cos(theta) + xOffset, radius * sin(theta) + yOffset - radius);
-    // }
-    // glEnd();
-    // glColor3f(0.0, 1.0, 0.0);
-    // glLineWidth(1000);
-    // glBegin(GL_LINES);
-    // glVertex3f(xOffset, radius * 2, 1);
-    // glVertex3f(xOffset, -radius * 2, 1);
-    // glEnd();
+    if (singlePlayer)
+    {
+    }
 
     // We have been drawing everything to the back buffer
     // Swap the buffers to see the result of what we drew
@@ -177,7 +207,19 @@ void appMouseFunc(int b, int s, int x, int y)
     float mx = (float)x;
     float my = (float)y;
 
-    windowToScene(mx, my);
+    windowToScene(mx, my); //mx,my are from -1 to 1
+
+    mx *= 1.5;               //mx is from -1.5 to 1.5
+    mx += 1.5;               //mx is from 0 to 3
+    int x_index = floor(mx); //0-1 == 0, 1-2 == 1, 2-3 == 2 (index x of 3x3 matrix)
+
+    my *= 1.5;               //my is from -1.5 to 1.5
+    my += 1.5;               //my is from 0 to 3
+    int y_index = floor(my); //0-1 == 0, 1-2 == 1, 2-3 == 2 (index y of 3x3 matrix)
+
+    board[x_index][y_index] = (turnNumber++ % 2) + 1; //Odd turns == Xs, even turns == Os
+
+    appDrawScene();
 
     // Redraw the scene by calling appDrawScene above
     // so that the point we added above will get painted
@@ -233,7 +275,7 @@ int main(int argc, char **argv)
     // Setup window position, size, and title
     glutInitWindowPosition(20, 60);
     glutInitWindowSize(width, height);
-    glutCreateWindow("CSE165 OpenGL Demo");
+    glutCreateWindow("CSE165 Tic Tac Toe");
 
     // Setup some OpenGL options
     glEnable(GL_DEPTH_TEST);
