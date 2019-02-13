@@ -17,13 +17,14 @@ int width = 640, height = 640;
 int board[3][3];
 
 bool singlePlayer = true;
-int turnNumber = 0;
-
+int turnNumber = 1;
+bool gameOver = false;
 //-------------------------------------------------------
 // A function to draw the scene
 //-------------------------------------------------------
 void appDrawScene()
 {
+if (!gameOver) {
     // Clear the screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -92,44 +93,7 @@ void appDrawScene()
     //check for a win::
     glColor3f(1.0, 0.0, 0.0);
     double center;
-    checkForWins();
-    bool placed = false;
-    if (singlePlayer && (turnNumber % 2 == 1))
-    {
-        for (int x = 0; x < 3; x++)
-        {
-            for (int y = 0; y < 3; y++)
-            {
-                if (board[x][y] == 0 && placed == false)
-                {
-                    board[x][y] = (turnNumber++) % 2 + 1;
-                    placed = true;
-                    break;
-                }
-            }
-        }
-    }
-    // bool isBoardFull = true;
-    // for (int x = 0; x < 3; x++)
-    // {
-    //     for (int y = 0; y < 3; y++)
-    //     {
-    //         if (board[x][y] == 0) {
-    //             isBoardFull = false;
-    //             break;
-    //         }
-    //     }
-    // }
-
-    // We have been drawing everything to the back buffer
-    // Swap the buffers to see the result of what we drew
-    glFlush();
-    glutSwapBuffers();
-}
-
-void checkForWins()
-{
-    int winner = 0;
+       int winner = 0;
     for (int i = 0; i < 3; i++)
     {
         center = i - 1; //-1, 0, 1
@@ -169,16 +133,53 @@ void checkForWins()
     }
     if (winner != 0)
     {
-        cout << "WINNER:\n" if (winner == 1)
-        {
-            cout << "X has won!\n";
-        }
-        if (winner == 2)
+	gameOver = true;
+        cout << "WINNER:\n";
+	if (winner == 1)
         {
             cout << "O has won!\n";
         }
+        if (winner == 2)
+        {
+            cout << "X has won!\n";
+        }
     }
+    bool placed = false;
+    if (singlePlayer && (turnNumber % 2 == 0))
+    {
+        for (int x = 0; x < 3; x++)
+        {
+            for (int y = 0; y < 3; y++)
+            {
+                if (board[x][y] == 0 && placed == false)
+                {
+                    board[x][y] = (turnNumber++) % 2 + 1;
+                    placed = true;
+                    break;
+                }
+            }
+        }
+    }
+     bool isBoardFull = true;
+     for (int x = 0; x < 3; x++)
+     {
+         for (int y = 0; y < 3; y++)
+         {
+             if (board[x][y] == 0) {
+                 isBoardFull = false;
+                 break;
+             }
+         }
+     }
+    if (isBoardFull) gameOver = true;
+
+    // We have been drawing everything to the back buffer
+    // Swap the buffers to see the result of what we drew
+    glFlush();
+    glutSwapBuffers();
 }
+}
+
 //-------------------------------------------------------
 // A function to convert window coordinates to scene
 // We use it when a mouse event is handled
@@ -309,13 +310,21 @@ void appMotionFunc(int x, int y)
 //-------------------------------------------------------
 void appKeyboardFunc(unsigned char key, int x, int y)
 {
-
     switch (key)
     {
     case 27:
         exit(0);
         break;
+    case 's':
+	cout << "SINGLEPLAYER = true\n";
+	singlePlayer = true;
+break;
+    case 'p':
+	cout << "SINGLEPLAYER = false\n";
+	singlePlayer = false;
+break;
     default:
+	cout <<key;
         break;
     }
 
@@ -329,6 +338,7 @@ void idle()
 
 int main(int argc, char **argv)
 {
+    cout << "WELCOME TO TIC TAC TOE\n~~~~~~~~~~~~~~~~~~~~~~\nPress 's' for SINGLEPLAYER.\nPress 'p' for MULTIPLAYER\n";
     // Initialize GLUT
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
