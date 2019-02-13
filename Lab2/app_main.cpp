@@ -96,7 +96,7 @@ void appDrawScene()
     {
         center = i - 1; //-1, 0, 1
         center *= .66;  //-.66, 0, .66
-        if (board[i][0] == board[i][1] == board[i][2])
+        if (board[i][0] != 0 && board[i][0] == board[i][1] && board[i][1] == board[i][2])
         {
             glBegin(GL_LINES);
             glVertex3f(center, -1, 1);
@@ -104,7 +104,7 @@ void appDrawScene()
             glEnd();
             //win
 
-            if (board[0][i] == board[1][i] == board[2][i])
+            if (board[0][i] != 0 && board[0][i] == board[1][i] && board[1][i] == board[2][i])
             {
                 glBegin(GL_LINES);
                 glVertex3f(1, center, 1);
@@ -113,7 +113,7 @@ void appDrawScene()
                 //win
             }
         }
-        if (board[0][0] == board[1][1] == board[2][2])
+        if (board[0][0] != 0 && board[0][0] == board[1][1] && board[1][1] == board[2][2])
         {
             glBegin(GL_LINES);
             glVertex3f(-1, -1, 1);
@@ -121,7 +121,7 @@ void appDrawScene()
             glEnd();
             //win
         }
-        if (board[0][2] == board[1][1] == board[2][0])
+        if (board[0][2] != 0 && board[0][2] == board[1][1] && board[1][1] == board[2][0])
         {
             glBegin(GL_LINES);
             glVertex3f(-1, 1, 1);
@@ -130,7 +130,7 @@ void appDrawScene()
             //win
         }
 
-        if (singlePlayer && turnNumber % 2 == 2)
+        if (singlePlayer && turnNumber % 2 == 0)
         {
             //...
         }
