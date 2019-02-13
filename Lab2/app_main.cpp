@@ -132,8 +132,28 @@ void appDrawScene()
 
         if (singlePlayer && turnNumber % 2 == 0)
         {
-            //...
+            for (int x = 0; x < 3; x++)
+            {
+                for (int y = 0; y < 3; y++)
+                {
+                    if (board[x][y] == 0)
+                    {
+                        board[x][y] = (turnNumber++) % 2 + 1;
+                    }
+                }
+            }
         }
+        // bool isBoardFull = true;
+        // for (int x = 0; x < 3; x++)
+        // {
+        //     for (int y = 0; y < 3; y++)
+        //     {
+        //         if (board[x][y] == 0) {
+        //             isBoardFull = false;
+        //             break;
+        //         }
+        //     }
+        // }
 
         // We have been drawing everything to the back buffer
         // Swap the buffers to see the result of what we drew
