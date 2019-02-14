@@ -24,160 +24,162 @@ bool gameOver = false;
 //-------------------------------------------------------
 void appDrawScene()
 {
-if (!gameOver) {
-    // Clear the screen
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    // Set background color to black
-    glClearColor(0.0, 0.0, 0.0, 1.0);
-
-    // Set up the transformations stack
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-    // Draw stuff here
-
-    float theta = 0;
-
-    float thetaInc = M_PI / 100;
-
-    float radius = 0.15;
-
-    // Drawing #
-
-    // B Negative Space
-    glColor3f(1.0, 1.0, 1.0);
-    glLineWidth(1000);
-    for (double spacing = -.33; spacing < .5; spacing += .66)
+    if (!gameOver)
     {
-        glBegin(GL_LINES);
-        glVertex3f(spacing, -1, 1);
-        glVertex3f(spacing, 1, 1);
-        glEnd();
-        glBegin(GL_LINES);
-        glVertex3f(-1, spacing, 1);
-        glVertex3f(1, spacing, 1);
-        glEnd();
-    }
-    double centerX, centerY;
-    for (int x = 0; x < 3; x++)
-    {
-        centerX = x - 1; //-1, 0, 1
-        centerX *= .66;  //-.66, 0, .66
-        for (int y = 0; y < 3; y++)
+        // Clear the screen
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        // Set background color to black
+        glClearColor(0.0, 0.0, 0.0, 1.0);
+
+        // Set up the transformations stack
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+        // Drawing parameters for circles
+        float theta = 0;
+        float thetaInc = M_PI / 100;
+        float radius = 0.15;
+
+        // Drawing #
+        glColor3f(1.0, 1.0, 1.0);
+        glLineWidth(1000);
+        for (double spacing = -.33; spacing < .5; spacing += .66)
         {
-            centerY = y - 1; //-1, 0, 1
-            centerY *= .66;  //-.66, 0, .66
-            if (board[x][y] == 1)
-            { //Draw O
-                glBegin(GL_POLYGON);
-                for (theta = 0; theta < 2.0 * M_PI; theta += thetaInc)
-                {
-                    glVertex2f((radius)*cos(theta) + centerX, (radius)*sin(theta) + centerY);
+            glBegin(GL_LINES);
+            glVertex3f(spacing, -1, 1);
+            glVertex3f(spacing, 1, 1);
+            glEnd();
+            glBegin(GL_LINES);
+            glVertex3f(-1, spacing, 1);
+            glVertex3f(1, spacing, 1);
+            glEnd();
+        }
+        // Drawing any Xs or Os on the board
+        double centerX, centerY;
+        for (int x = 0; x < 3; x++)
+        {
+            centerX = x - 1; //-1, 0, 1
+            centerX *= .66;  //-.66, 0, .66
+            for (int y = 0; y < 3; y++)
+            {
+                centerY = y - 1; //-1, 0, 1
+                centerY *= .66;  //-.66, 0, .66
+                if (board[x][y] == 1)
+                { //Draw O
+                    glBegin(GL_POLYGON);
+                    for (theta = 0; theta < 2.0 * M_PI; theta += thetaInc)
+                    {
+                        glVertex2f((radius)*cos(theta) + centerX, (radius)*sin(theta) + centerY);
+                    }
+                    glEnd();
                 }
+                if (board[x][y] == 2)
+                { //Draw X
+                    glBegin(GL_LINES);
+                    glVertex3f(centerX - radius, centerY - radius, 1);
+                    glVertex3f(centerX + radius, centerY + radius, 1);
+                    glEnd();
+                    glBegin(GL_LINES);
+                    glVertex3f(centerX + radius, centerY - radius, 1);
+                    glVertex3f(centerX - radius, centerY + radius, 1);
+                    glEnd();
+                }
+            }
+        }
+        // Check for a Win
+        glColor3f(1.0, 0.0, 0.0);
+        double center;
+        int winner = 0;
+        for (int i = 0; i < 3; i++)
+        {
+            center = i - 1; //-1, 0, 1
+            center *= .66;  //-.66, 0, .66
+            if (board[i][0] != 0 && board[i][0] == board[i][1] && board[i][1] == board[i][2])
+            {
+                winner = board[i][0];
+                glBegin(GL_LINES);
+                glVertex3f(center, -1, 1);
+                glVertex3f(center, 1, 1);
                 glEnd();
             }
-            if (board[x][y] == 2)
-            { //Draw X
+            if (board[0][i] != 0 && board[0][i] == board[1][i] && board[1][i] == board[2][i])
+            {
+                winner = board[0][i];
                 glBegin(GL_LINES);
-                glVertex3f(centerX - radius, centerY - radius, 1);
-                glVertex3f(centerX + radius, centerY + radius, 1);
-                glEnd();
-                glBegin(GL_LINES);
-                glVertex3f(centerX + radius, centerY - radius, 1);
-                glVertex3f(centerX - radius, centerY + radius, 1);
+                glVertex3f(1, center, 1);
+                glVertex3f(-1, center, 1);
                 glEnd();
             }
         }
-    }
-    //check for a win::
-    glColor3f(1.0, 0.0, 0.0);
-    double center;
-       int winner = 0;
-    for (int i = 0; i < 3; i++)
-    {
-        center = i - 1; //-1, 0, 1
-        center *= .66;  //-.66, 0, .66
-        if (board[i][0] != 0 && board[i][0] == board[i][1] && board[i][1] == board[i][2])
+        if (board[0][0] != 0 && board[0][0] == board[1][1] && board[1][1] == board[2][2])
         {
-            winner = board[i][0];
+            winner = board[0][0];
             glBegin(GL_LINES);
-            glVertex3f(center, -1, 1);
-            glVertex3f(center, 1, 1);
+            glVertex3f(-1, -1, 1);
+            glVertex3f(1, 1, 1);
             glEnd();
         }
-        if (board[0][i] != 0 && board[0][i] == board[1][i] && board[1][i] == board[2][i])
+        if (board[0][2] != 0 && board[0][2] == board[1][1] && board[1][1] == board[2][0])
         {
-            winner = board[0][i];
+            winner = board[0][2];
             glBegin(GL_LINES);
-            glVertex3f(1, center, 1);
-            glVertex3f(-1, center, 1);
+            glVertex3f(-1, 1, 1);
+            glVertex3f(1, -1, 1);
             glEnd();
         }
-    }
-    if (board[0][0] != 0 && board[0][0] == board[1][1] && board[1][1] == board[2][2])
-    {
-        winner = board[0][0];
-        glBegin(GL_LINES);
-        glVertex3f(-1, -1, 1);
-        glVertex3f(1, 1, 1);
-        glEnd();
-    }
-    if (board[0][2] != 0 && board[0][2] == board[1][1] && board[1][1] == board[2][0])
-    {
-        winner = board[0][2];
-        glBegin(GL_LINES);
-        glVertex3f(-1, 1, 1);
-        glVertex3f(1, -1, 1);
-        glEnd();
-    }
-    if (winner != 0)
-    {
-	gameOver = true;
-        cout << "WINNER:\n";
-	if (winner == 1)
+        if (winner != 0)
         {
-            cout << "O has won!\n";
+            gameOver = true;
+            cout << "WINNER:\n";
+            if (winner == 1)
+            {
+                cout << "O has won!\n";
+            }
+            if (winner == 2)
+            {
+                cout << "X has won!\n";
+            }
         }
-        if (winner == 2)
+
+        // Really dumb AI
+        bool placed = false;
+        if (singlePlayer && (turnNumber % 2 == 0))
         {
-            cout << "X has won!\n";
+            for (int x = 0; x < 3; x++)
+            {
+                for (int y = 0; y < 3; y++)
+                {
+                    if (board[x][y] == 0 && placed == false)
+                    {
+                        board[x][y] = (turnNumber++) % 2 + 1;
+                        placed = true;
+                        break;
+                    }
+                }
+            }
         }
-    }
-    bool placed = false;
-    if (singlePlayer && (turnNumber % 2 == 0))
-    {
+
+        // Check for a Cats Game
+        bool isBoardFull = true;
         for (int x = 0; x < 3; x++)
         {
             for (int y = 0; y < 3; y++)
             {
-                if (board[x][y] == 0 && placed == false)
+                if (board[x][y] == 0)
                 {
-                    board[x][y] = (turnNumber++) % 2 + 1;
-                    placed = true;
+                    isBoardFull = false;
                     break;
                 }
             }
         }
-    }
-     bool isBoardFull = true;
-     for (int x = 0; x < 3; x++)
-     {
-         for (int y = 0; y < 3; y++)
-         {
-             if (board[x][y] == 0) {
-                 isBoardFull = false;
-                 break;
-             }
-         }
-     }
-    if (isBoardFull) gameOver = true;
+        if (isBoardFull)
+            gameOver = true;
 
-    // We have been drawing everything to the back buffer
-    // Swap the buffers to see the result of what we drew
-    glFlush();
-    glutSwapBuffers();
-}
+        // We have been drawing everything to the back buffer
+        // Swap the buffers to see the result of what we drew
+        glFlush();
+        glutSwapBuffers();
+    }
 }
 
 //-------------------------------------------------------
@@ -316,15 +318,15 @@ void appKeyboardFunc(unsigned char key, int x, int y)
         exit(0);
         break;
     case 's':
-	cout << "SINGLEPLAYER = true\n";
-	singlePlayer = true;
-break;
+        cout << "SINGLEPLAYER = true\n";
+        singlePlayer = true;
+        break;
     case 'p':
-	cout << "SINGLEPLAYER = false\n";
-	singlePlayer = false;
-break;
+        cout << "SINGLEPLAYER = false\n";
+        singlePlayer = false;
+        break;
     default:
-	cout <<key;
+        cout << key;
         break;
     }
 
