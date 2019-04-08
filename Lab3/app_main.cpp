@@ -231,8 +231,8 @@ int main(int argc, char **argv)
     brush->setRGB(1,.5,.25); 
     brush->setRadius(.05);
 
-    // brush->setRainbow(true);
-    // brush->setSizeEffect(true);
+    brush->setRainbow(true);
+    brush->setSizeEffect(true);
 
     //brush ;
 
