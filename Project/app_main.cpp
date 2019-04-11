@@ -305,7 +305,7 @@ int main(int argc, char** argv) {
     // Everything should be working when we uncomment next line
     shapes.push_back(new TextBox("Hello World", -0.5, 0.5));
 
-    shapes.push_back(new TextBox("Wassuppp", 0.5, -0.5));
+    shapes.push_back(new TextBox("Wassuppp", 0.5, -0.5));-q 
 
     shapes.push_back(new TextBox("red red red", -0.5, -0.5, 1, .1, .1));
 
