@@ -5,27 +5,27 @@ Player::Player() {
 
 }
 
-void Player::draw() {
+void Player::draw(Point* camera_position) {
 }
 
-void Player::draw(Point* camera_position) {
+void Player::draw() { //Point* camera_position) {
 	int black_eye_points[] = { 172, 112, 174, 107, 179, 105, 184, 107, 187, 112, 185, 117, 179, 119, 174, 117 };
 	int i = 0;	
 //Eye
 	glColor3f(0, 0, 1);
 	glBegin(GL_POLYGON);
-	for (i = 0; i < (sizeof(black_eye_points)/sizeof(*black_eye_points)); i += 2) {
-		std::cout << black_eye_points[i] + camera_position->getX() << "test\n";
-		glVertex2f(black_eye_points[i] + camera_position->getX(), 350 - black_eye_points[i + 1] + camera_position->getY());
-	} 
-	//glVertex2f(172, 350 - 112);
-	//glVertex2f(174, 350 - 107);
-	//glVertex2f(179, 350 - 105);
-	//glVertex2f(184, 350 - 107);
-	//glVertex2f(187, 350 - 112);
-	//glVertex2f(185, 350 - 117);
-	//glVertex2f(179, 350 - 119);
-	//glVertex2f(174, 350 - 117);
+	//for (i = 0; i < (sizeof(black_eye_points)/sizeof(*black_eye_points)); i += 2) {
+	//	std::cout << black_eye_points[i] + camera_position->getX() << "test\n";
+	//	glVertex2f(black_eye_points[i] + camera_position->getX(), 350 - black_eye_points[i + 1] + camera_position->getY());
+	//} 
+	glVertex2f(172, 350 - 112);
+	glVertex2f(174, 350 - 107);
+	glVertex2f(179, 350 - 105);
+	glVertex2f(184, 350 - 107);
+	glVertex2f(187, 350 - 112);
+	glVertex2f(185, 350 - 117);
+	glVertex2f(179, 350 - 119);
+	glVertex2f(174, 350 - 117);
 	glEnd();
 
 	//Scarf
