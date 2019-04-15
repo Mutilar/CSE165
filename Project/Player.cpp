@@ -5,11 +5,6 @@ Player::Player() {
 }
 
 void Player::draw() {
-
-	// Set background color to black
-	glClearColor(0.0, 1.0, 0.0, 1.0);
-
-	
 	//Eye
 	glColor3f(0, 0, 0);
 	glBegin(GL_POLYGON);
@@ -58,6 +53,7 @@ void Player::draw() {
 	glVertex2f(194, 163);
 	glVertex2f(179, 163);
 	glEnd();
+	//Beak
 	glBegin(GL_POLYGON);
 	glVertex2f(206, 109);
 	glVertex2f(237, 121);
