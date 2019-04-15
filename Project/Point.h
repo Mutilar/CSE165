@@ -1,15 +1,15 @@
-#ifndef Line_h
-#define Line_h
+#ifndef Point_h
+#define Point_h
 
 class Point {
 
 private:
-    float x, y;
+    int x, y;
     
 public:
-    Point(float x, float y);  
-    float getX();
-    float getY();	
+    Point(int x, int y);  
+    int getX();
+    int getY();	
 };
 
 #endif

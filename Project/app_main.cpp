@@ -10,20 +10,22 @@
 #include <GL/freeglut.h>
 #endif
 
+#include "Game.h"
+
 using namespace std;
 
 // Store the width and height of the window
 int width = 640, height = 640;
 
-// Game* game;
+Game* game;
 
 void appDrawScene()
 {
 	// Clear the screen
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// game->step();
-	// game->draw();
+	 game->step();
+	 game->draw();
 
 	// Set up the transformations stack
 	glMatrixMode(GL_MODELVIEW);
@@ -148,11 +150,6 @@ void appKeyboardFunc(unsigned char key, int x, int y)
 
 	if (key == 27)
 	{
-		for (int i = 0; i < shapes.size(); i++)
-		{
-			delete shapes[i];
-		}
-		exit(0);
 	}
 
 	// After all the state changes, redraw the scene
@@ -173,7 +170,7 @@ int main(int argc, char **argv)
 	glutInitWindowSize(width, height);
 	glutCreateWindow("LineRider++");
 
-	// game = new Game();
+	game = new Game();
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_POINT_SMOOTH);

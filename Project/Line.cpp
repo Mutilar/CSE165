@@ -1,13 +1,13 @@
 #include "Line.h"
 
-Line::Line(Point* start, Point* end) {
-	this->start = start;
-	this->end = end;
+Line::Line() {
+	//this->start = start;
+	//this->end = end;
 }
 
 void Line::draw() {
 
-	glColor3f(1, 1, 1);
+    glColor3f(1, 1, 1);
     
     glBegin(GL_POLYGON);
     

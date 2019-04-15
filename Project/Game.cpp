@@ -6,6 +6,9 @@ Game::Game() {
 
 void Game::draw() {
 
-	world->draw();
+   world->draw();
    
+}
+void Game::step() {
+
 }

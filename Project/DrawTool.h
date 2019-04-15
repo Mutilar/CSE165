@@ -1,14 +1,11 @@
-#ifndef Line_h
-#define Line_h
+#ifndef DrawTool_h
+#define DrawTool_h
 
-class Line {
+class DrawTool {
 
-protected:
-    Point start;
-    Point end;
     
 public:
-    Line(Point, Point);    
+    DrawTool(); 
 };
 
 #endif

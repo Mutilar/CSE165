@@ -4,7 +4,7 @@ Player::Player() {
 
 }
 
-void Player::draw() {
+void Player::draw() {//Point* camera_position) {
 
 	// Set background color to black
 	glClearColor(0.0, 1.0, 0.0, 1.0);

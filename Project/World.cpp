@@ -6,10 +6,10 @@ World::World() {
 
 void World::draw() {
 
-
-	for line in lines
-
-		line->draw();
+   player->draw();
+//	for line in lines
+//
+//		line->draw();
 }
 
 

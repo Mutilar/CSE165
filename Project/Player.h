@@ -1,6 +1,15 @@
 #ifndef Player_h
 #define Player_h
 
+#if defined WIN32
+#include <freeglut.h>
+#elif defined __APPLE__
+#include <GLUT/glut.h>
+#else
+#include <GL/freeglut.h>
+#endif
+
+
 #include "Point.h"
 
 class Player {
@@ -10,10 +19,11 @@ private:
     float rotation; //in degrees, probably
     
 public:
-    Player(Point* position);
+    Player();
     Point getPosition();
     void setPosition(Point position);
-    void draw(Point camera_position);    
+    void draw();  
+    void draw(Point* camera_position);    
 };
 
 #endif
