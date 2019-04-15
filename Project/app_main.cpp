@@ -25,7 +25,7 @@ void appDrawScene()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	 game->step();
-	 game->draw();
+	 //game->draw();
 
 	// Set up the transformations stack
 	glMatrixMode(GL_MODELVIEW);

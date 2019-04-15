@@ -1,1 +1,0 @@
-DrawTool.o: DrawTool.cpp
