@@ -16,116 +16,8 @@ using namespace std;
 // Store the width and height of the window
 int width = 640, height = 640;
 
-class Shape{
-public:
-    virtual void draw() const {
-        cout << "Drawing generic shape" << endl;
-    }
-};
+Game* game;
 
-class Rect: public Shape {
-    float x;
-    float y;
-    float w;
-    float h;
-public:
-    Rect (): x(0), y(0), w(0.5), h(0.5){}
-    
-    Rect (float x, float y, float w, float h) : x(x), y(y), w(w), h(h) {}
-    
-    void draw() const {
-        glBegin(GL_LINES);
-        
-        glVertex2f(x, y);
-        glVertex2f(x + w, y);
-        
-        glVertex2f(x + w, y);
-        glVertex2f(x + w, y - h);
-        
-        glVertex2f(x + w, y - h);
-        glVertex2f(x, y - h);
-        
-        glVertex2f(x, y - h);
-        glVertex2f(x, y);
-        
-        glEnd();
-    }
-};
-
-class Circle: public Shape {
-    float x;
-    float y;
-    float r;
-    
-public:
-    Circle(): x(0), y(0), r(0.2){}
-    Circle(float x, float y, float r): x(x), y(y), r(r) {}
-    
-    void draw() const {
-        glBegin(GL_LINES);
-        
-        float inc = 0.1;
-        
-        for(float theta = 0; theta < 2*M_PI; theta += inc){
-            glVertex2f(r*cos(theta)+x, r*sin(theta) + y);
-            glVertex2f(r*cos(theta+inc)+x, r*sin(theta+inc) + y);
-        }
-        
-        glEnd();
-    }
-    
-};
-
-
-class Point: public Shape {
-    float x;
-    float y;
-public:
-    Point() : Shape(), x(-0.5), y(0.5){}
-    
-    void draw() const {
-        glBegin(GL_POINTS);
-        
-        glVertex2f(x, y);
-        
-        glEnd();
-    }
-};
-
-
-class TextBox: public Shape {
-	string text;
-	float x,y;
-
-	float r,b,g;
-
-	void* font;
-
-public:
-
-	TextBox(string text, float x, float y): text(text), x(x), y(y) { r = 1; b = 1; g = 1; font = GLUT_BITMAP_HELVETICA_18; }
-	TextBox(string text, float x, float y, float r, float g, float b): text(text), x(x), y(y), r(r), g(g), b(b) { font = GLUT_BITMAP_HELVETICA_18; }
-	TextBox(string text, float x, float y, float r, float g, float b, void* font): text(text), x(x), y(y), r(r), g(g), b(b), font(font) { }
-    
-    void draw() const {
-    	glColor3f(r, g, b);
- 	   	float offset = 0;
-   	 	for (int i = 0; i < text.length(); i++) {
-        	glRasterPos2f(x+offset, y);
-        	glutBitmapCharacter(font, text[i]);
-        	int w = glutBitmapWidth(font, text[i]);
-       		offset += ((float)w / width)*2;
-
-    	}
-   }
- };
-
-
-vector<Shape*> shapes;
-
-//-------------------------------------------------------
-// A function to draw the scene
-//-------------------------------------------------------
 void appDrawScene() {
 	// Clear the screen
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -133,25 +25,14 @@ void appDrawScene() {
 	// Set background color to black
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 
+	game->step();
+	game->draw();
+
 	// Set up the transformations stack
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-    // Draw stuff here
-//    rect->draw();
-//    circ->draw();
-    
-    for (int i = 0; i < shapes.size(); i++) {
-        shapes[i]->draw();
-    }
-    
-    
-    // This is only for testing purposes
-    // renderText("This is a test", -0.8, 0, GLUT_BITMAP_TIMES_ROMAN_24);
-
-	// We have been drawing everything to the back buffer
-	// Swap the buffers to see the result of what we drew
-	glFlush();
+    glFlush();
 	glutSwapBuffers();
 }
 
@@ -275,64 +156,35 @@ void appKeyboardFunc(unsigned char key, int x, int y) {
 }
 
 
-void idle(){
+void idle() {
+
 
 }
 
 
 int main(int argc, char** argv) {
+	
 	// Initialize GLUT
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH);
-
-	// Setup window position, size, and title
 	glutInitWindowPosition(20, 60);
 	glutInitWindowSize(width, height);
-	glutCreateWindow("CSE165 OpenGL Demo");
+	glutCreateWindow("LineRider++");
 
-	// Setup some OpenGL options
+
+	game = new Game();
+
+
+	
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_POINT_SMOOTH);
 	glEnable(GL_LINE_SMOOTH);
-    
     glPointSize(5);
-
-    shapes.push_back(new Rect());
-    shapes.push_back(new Circle());
-    shapes.push_back(new Point());
-    shapes.push_back(new Circle(0.5, 0.5, 0.5));
-    
-    // Everything should be working when we uncomment next line
-    shapes.push_back(new TextBox("Hello World", -0.5, 0.5));
-
-    shapes.push_back(new TextBox("Wassuppp", 0.5, -0.5));-q 
-
-    shapes.push_back(new TextBox("red red red", -0.5, -0.5, 1, .1, .1));
-
-    shapes.push_back(new TextBox("blue font blue", 0.5, 0.5, 0, 0, 1, GLUT_BITMAP_TIMES_ROMAN_24));
-
-
-    shapes.push_back(new TextBox("Yoooo", 0, 0));
-
-
-	// Set callback for drawing the scene
 	glutDisplayFunc(appDrawScene);
-
-	// Set callback for resizing th window
 	glutReshapeFunc(appReshapeFunc);
-
-	// Set callback to handle mouse clicks
 	glutMouseFunc(appMouseFunc);
-    
-    
     glutIdleFunc(idle);
-
-	// Set callback to handle mouse dragging
 	glutMotionFunc(appMotionFunc);
-
-	// Set callback to handle keyboad events
 	glutKeyboardFunc(appKeyboardFunc);
-
-	// Start the main loop
 	glutMainLoop();
 }

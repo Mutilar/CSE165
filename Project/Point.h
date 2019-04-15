@@ -1,14 +1,15 @@
 #ifndef Line_h
 #define Line_h
 
-class Line {
+class Point {
 
-protected:
-    Point start;
-    Point end;
+private:
+    float x, y;
     
 public:
-    Line(Point, Point);    
+    Point(float x, float y);  
+    float getX();
+    float getY();	
 };
 
 #endif

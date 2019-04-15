@@ -5,8 +5,11 @@
 
 class Game {
 
-protected:
+
+private:
     World world;
+
+    bool is_paused;
     
 public:
     Game();

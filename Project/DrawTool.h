@@ -4,11 +4,11 @@
 class Line {
 
 protected:
-    Point* start;
-    Point* end;
+    Point start;
+    Point end;
     
 public:
-    Line(Point* start, Point* end);    
+    Line(Point, Point);    
 };
 
 #endif

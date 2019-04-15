@@ -7,7 +7,9 @@
 class World {
 
 protected:
-    Player player;
+    Player* player;
+    DrawTool* draw_tool;
+
     vector<Line> lines;
     
 public:
