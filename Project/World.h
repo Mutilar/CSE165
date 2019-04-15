@@ -20,8 +20,7 @@ class World {
 protected:
     Player* player;
     DrawTool* draw_tool;
-    Line line;
-//    std::vector<Line> lines;
+    std::vector<Line> lines;
     
 public:
     World();
