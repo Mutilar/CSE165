@@ -1,1 +1,1 @@
-Player.o: Player.cpp Player.h Point.h
+Player.o: Player.cpp Player.h WorldObject.h Point.h

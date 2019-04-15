@@ -10,12 +10,12 @@
 #endif
 
 
+#include "WorldObject.h"
 #include "Point.h"
 
-class Player {
+class Player: public WorldObject {
 
 private:
-    Point* position;
     float rotation; //in degrees, probably
     
 public:

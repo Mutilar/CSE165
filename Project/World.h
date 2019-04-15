@@ -13,6 +13,7 @@
 #include <vector>
 #include "Player.h"
 #include "DrawTool.h"
+#include "Camera.h"
 #include "Line.h"
 
 class World {
@@ -20,6 +21,7 @@ class World {
 protected:
     Player* player;
     DrawTool* draw_tool;
+    Camera* camera;
     std::vector<Line> lines;
     
 public:

@@ -66,9 +66,9 @@ void appReshapeFunc(int w, int h)
 
 	// Define x-axis and y-axis range
 	const double appXmin = 0.0;
-	const double appXmax = 350.0;
+	const double appXmax = 700.0;
 	const double appYmin = 0.0;
-	const double appYmax = 350.0;
+	const double appYmax = 700.0;
 
 	// Define that OpenGL should use the whole window for rendering
 	glViewport(0, 0, w, h);

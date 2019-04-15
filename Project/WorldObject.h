@@ -1,5 +1,5 @@
-#ifndef Line_h
-#define Line_h
+#ifndef WorldObject_h
+#define WorldObject_h
 
 #if defined WIN32
 #include <freeglut.h>
@@ -10,19 +10,18 @@
 #endif
 
 
-
 #include "Point.h"
-#include "WorldObject.h"
 
-class Line : public WorldObject {
+class WorldObject {
 
-private:
-    Point* start;
-    Point* end;
+protected:
+    Point* position;
+    
     
 public:
-    Line();    
-    void draw();
+  //  virtual void draw();
+   Point* getPosition();
+    
 };
 
 #endif

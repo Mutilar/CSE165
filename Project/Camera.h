@@ -1,5 +1,5 @@
-#ifndef Line_h
-#define Line_h
+#ifndef Camera_h
+#define Camera_h
 
 #if defined WIN32
 #include <freeglut.h>
@@ -10,19 +10,16 @@
 #endif
 
 
-
-#include "Point.h"
 #include "WorldObject.h"
+#include "Point.h"
 
-class Line : public WorldObject {
+class Camera : public WorldObject {
 
 private:
-    Point* start;
-    Point* end;
     
 public:
-    Line();    
-    void draw();
+    Camera();
+    void draw();  
 };
 
 #endif
