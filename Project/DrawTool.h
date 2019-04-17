@@ -7,13 +7,17 @@
 class DrawTool {
 
 private:
-    std::vector<Line> lines;
+    Line* ghost_line;
     bool state;
+    int start_x, start_y, current_x, current_y;
 
 public:
     DrawTool();
-    void draw(Point* camera_position); 
-    void setState(bool state); 
+    void draw(std::vector<Line*> lines, Point* camera_position); 
+    void drag (int x, int y);
+
+    void setState(std::vector<Line*> lines, bool state, int x, int y); 
+
     
 };
 

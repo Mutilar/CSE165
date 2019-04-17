@@ -1,7 +1,7 @@
 #include "Camera.h"
 
 Camera::Camera() {
-    position = new Point(100, 100);
+    position = new Point(0, 0);
 
 }
 

@@ -32,7 +32,9 @@ void appDrawScene()
 //-------------------------------------------------------
 void windowToScene(float &x, float &y)
 {
-	x = (2.0f * (x / float(width))) - 1.0f;
+	x = x/float(width) * 2000;
+
+	y = y/float(height) * 2000;
 }
 
 //-------------------------------------------------------
@@ -109,7 +111,7 @@ void appMouseFunc(int b, int s, int x, int y)
 	windowToScene(mx, my);
 
 	
-	game->mouseDown(b, s, x, y);	
+	game->mouseDown(b, s, (int)mx, (int)my);	
 }
 
 //-------------------------------------------------------
@@ -120,7 +122,12 @@ void appMouseFunc(int b, int s, int x, int y)
 //-------------------------------------------------------
 void appMotionFunc(int x, int y)
 {
-	game->mouseDrag(x, y);
+	float mx = (float)x;
+	float my = (float)y;
+
+	windowToScene(mx, my);
+
+	game->mouseDrag( (int)mx, (int)my);
 }
 
 //-------------------------------------------------------
@@ -162,6 +169,9 @@ int main(int argc, char **argv)
 
 	game = new Game();
 	timer(0);
+
+	glutSetOption(GLUT_MULTISAMPLE, 8);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH | GLUT_MULTISAMPLE);
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_POINT_SMOOTH);

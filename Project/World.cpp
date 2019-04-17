@@ -4,6 +4,7 @@
 World::World() {
    player = new Player();
    camera = new Camera();
+   draw_tool = new DrawTool();
 }
 
 void World::draw() {
@@ -15,7 +16,8 @@ void World::draw() {
 
    draw_tool->draw(camera->getPosition());
 
-   camera->setPosition(camera->getPosition()->getX() + 1, 100);
+   
+   // camera->setPosition(camera->getPosition()->getX() + 1, 100);
 }
 
 DrawTool* World::getDrawTool() {

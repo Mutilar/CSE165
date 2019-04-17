@@ -9,23 +9,25 @@
 #include <GL/freeglut.h>
 #endif
 
-
-
 #include "Point.h"
 #include "WorldObject.h"
 
-class Line : public WorldObject {
+class Line : public WorldObject
+{
 
-private:
-    Point* start;
-    Point* end;
-    
-public:
-    Line();    
-    void draw(Point* camera_position);
+  private:
+    Point *start;
+    Point *end;
+
+  public:
+    Line();
+    Line(int x1, int y1, int x2, int y2);
+    void draw(Point *camera_position);
+    void setStartPoint(int x, int y);
+    void setEndPoint(int x, int y);
+
+    Point* getStartPoint();
+    Point* getEndPoint();
 };
 
 #endif
-
-
-
