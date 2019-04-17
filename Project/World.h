@@ -27,6 +27,7 @@ protected:
 public:
     World();
     void draw();
+    void step();
     
 };
 

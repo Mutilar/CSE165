@@ -21,16 +21,7 @@ Game* game;
 
 void appDrawScene()
 {
-	// Clear the screen
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
-	// Set up the transformations stack
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-	glFlush();
-	glutSwapBuffers();
 }
 
 //-------------------------------------------------------
@@ -157,14 +148,7 @@ void idle()
 {
 }
 
-void timer(int id){
-    
-//	 game->step();
-//	game->draw();game->draw();
-	game->draw();
-	cout << "...\n";
-    glutTimerFunc(1000, timer, id);
-}
+
 
 int main(int argc, char **argv)
 {
@@ -177,7 +161,6 @@ int main(int argc, char **argv)
 	glutCreateWindow("LineRider++");
 
 	game = new Game();
-	timer(0);
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_POINT_SMOOTH);

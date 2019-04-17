@@ -2,6 +2,7 @@
 
 Game::Game() {
    world = new World();
+   timer(0);
 }
 
 void Game::draw() {
@@ -20,5 +21,13 @@ void Game::draw() {
    
 }
 void Game::step() {
+   world->step();
+}
 
+void Game::timer(int id) {
+    
+   this->step();
+	this->draw();
+	cout << "...\n";
+   glutTimerFunc(1000, this->timer, id);
 }

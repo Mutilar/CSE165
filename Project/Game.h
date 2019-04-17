@@ -28,6 +28,8 @@ public:
     void step();
     void click();
     void togglePause();
+
+    void timer(int id)
     
 };
 

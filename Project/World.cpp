@@ -19,7 +19,9 @@ void World::draw() {
 //		line->draw();
 }
 
-
+void World::step() {
+   
+}
 
 
 
