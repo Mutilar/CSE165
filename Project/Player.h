@@ -26,6 +26,7 @@ public:
     void setPosition(Point position);
     void draw();  
     void draw(Point* camera_position);    
+    void step();  
 };
 
 #endif

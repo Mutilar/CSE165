@@ -22,7 +22,7 @@ private:
     
 public:
     Line();    
-    void draw();
+    void draw(Point* camera_position);
 };
 
 #endif

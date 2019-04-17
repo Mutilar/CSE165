@@ -22,12 +22,13 @@ protected:
     Player* player;
     DrawTool* draw_tool;
     Camera* camera;
-    std::vector<Line> lines;
     
 public:
     World();
     void draw();
     void step();
+
+    DrawTool* getDrawTool();
     
 };
 

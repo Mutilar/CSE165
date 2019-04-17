@@ -21,7 +21,7 @@ Game* game;
 
 void appDrawScene()
 {
-
+ 	game->draw();
 }
 
 //-------------------------------------------------------
@@ -54,9 +54,9 @@ void appReshapeFunc(int w, int h)
 
 	// Define x-axis and y-axis range
 	const double appXmin = 0.0;
-	const double appXmax = 700.0;
+	const double appXmax = 2000.0;
 	const double appYmin = 0.0;
-	const double appYmax = 700.0;
+	const double appYmax = 2000.0;
 
 	// Define that OpenGL should use the whole window for rendering
 	glViewport(0, 0, w, h);
@@ -108,9 +108,8 @@ void appMouseFunc(int b, int s, int x, int y)
 
 	windowToScene(mx, my);
 
-	// Redraw the scene by calling appDrawScene above
-	// so that the point we added above will get painted
-	glutPostRedisplay();
+	
+	game->mouseDown(b, s, x, y);	
 }
 
 //-------------------------------------------------------
@@ -121,9 +120,7 @@ void appMouseFunc(int b, int s, int x, int y)
 //-------------------------------------------------------
 void appMotionFunc(int x, int y)
 {
-
-	// Again, we redraw the scene
-	glutPostRedisplay();
+	game->mouseDrag(x, y);
 }
 
 //-------------------------------------------------------
@@ -144,10 +141,13 @@ void appKeyboardFunc(unsigned char key, int x, int y)
 	glutPostRedisplay();
 }
 
-void idle()
-{
-}
+void idle() { }
 
+void timer(int id) {
+   game->step();
+   game->draw();
+   glutTimerFunc(100, timer, id);
+}
 
 
 int main(int argc, char **argv)
@@ -161,6 +161,7 @@ int main(int argc, char **argv)
 	glutCreateWindow("LineRider++");
 
 	game = new Game();
+	timer(0);
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_POINT_SMOOTH);

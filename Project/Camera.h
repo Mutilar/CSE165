@@ -20,6 +20,7 @@ private:
 public:
     Camera();
     void draw();  
+    void step();
 };
 
 #endif

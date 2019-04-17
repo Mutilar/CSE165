@@ -2,7 +2,6 @@
 
 Game::Game() {
    world = new World();
-   timer(0);
 }
 
 void Game::draw() {
@@ -24,10 +23,15 @@ void Game::step() {
    world->step();
 }
 
-void Game::timer(int id) {
-    
-   this->step();
-	this->draw();
-	cout << "...\n";
-   glutTimerFunc(1000, this->timer, id);
+void Game::mouseDown(int b, int s, int x, int y) {
+	 if (b == GLUT_LEFT_BUTTON) {
+        world->getDrawTool()->setState(!s);
+    }
+   glutPostRedisplay();
 }
+void Game::mouseDrag(int x, int y) {
+
+	
+   glutPostRedisplay();
+}
+

@@ -21,15 +21,17 @@ private:
     World* world;
 
     bool is_paused;
-    
+
 public:
     Game();
     void draw();
     void step();
-    void click();
-    void togglePause();
+    //void click();
 
-    void timer(int id)
+    void mouseDown(int b, int s, int x, int y);
+    void mouseDrag(int x, int y);
+
+    void togglePause();
     
 };
 

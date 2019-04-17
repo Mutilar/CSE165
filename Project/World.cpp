@@ -12,15 +12,19 @@ void World::draw() {
    glClearColor(1.0, 1.0, 1.0, 1.0);
 
    player->draw(camera->getPosition());
+
+   draw_tool->draw(camera->getPosition());
+
    camera->setPosition(camera->getPosition()->getX() + 1, 100);
-   // std::cout << camera->getPosition()->getX() << "\n";
-//	for line in lines
-//
-//		line->draw();
+}
+
+DrawTool* World::getDrawTool() {
+   return this->draw_tool;
 }
 
 void World::step() {
-   
+   player->step();
+   camera->step();
 }
 
 

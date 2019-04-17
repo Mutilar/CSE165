@@ -6,6 +6,14 @@ Player::Player()
 {
 }
 
+void Player::step() {
+
+	//cast 3 rays
+	//update rotation
+	//update speed
+
+}
+
 void Player::draw()
 { //Point* camera_position) {
 }
