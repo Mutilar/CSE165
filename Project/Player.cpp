@@ -4,11 +4,12 @@
 
 Player::Player()
 {
+	this->position = new Point(0,0);
 }
 
 void Player::step()
 {
-	
+
 
 	//cast 3 rays
 	//update rotation
@@ -25,7 +26,7 @@ void Player::drawSet(int *points, int num_points, Point *camera_position, int r,
 	glColor3f(r, g, b);
 	glBegin(GL_POLYGON);
 	for (int i = 0; i < num_points; i += 2)
-		glVertex2f(points[i] + this->getPosition->getX() + camera_position->getX(), 350 - points[i + 1] + this->getPosition->getY() + camera_position->getY());
+		glVertex2f(points[i] + this->getPositionX() + camera_position->getX(), 350 - points[i + 1] + this->getPositionY() + camera_position->getY());
 	glEnd();
 }
 

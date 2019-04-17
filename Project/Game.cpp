@@ -34,7 +34,7 @@ void Game::mouseDown(int b, int s, int x, int y)
 		//else
 		{
 
-			world->getDrawTool()->setState(!s, x, y);
+			world->getDrawTool()->setState( world->getLines(), !s, x, y);
 		}
 	}
 

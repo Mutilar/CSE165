@@ -30,8 +30,9 @@ public:
     void draw();
     void step();
 
+
     DrawTool* getDrawTool();
-    
+    std::vector<Line*> getLines();    
 };
 
 #endif
