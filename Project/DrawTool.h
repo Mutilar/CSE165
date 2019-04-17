@@ -16,7 +16,7 @@ public:
     void draw(std::vector<Line*> lines, Point* camera_position); 
     void drag (int x, int y);
 
-    void setState(std::vector<Line*> lines, bool state, int x, int y); 
+    void setState(std::vector<Line*> &lines, bool state, int x, int y); 
 
     
 };
