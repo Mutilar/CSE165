@@ -17,6 +17,8 @@ class Player: public WorldObject {
 
 private:
     float rotation; //in degrees, probably
+
+    void drawSet(int* points, int num_points, Point *camera_position, int r, int g, int b);
     
 public:
     Player();

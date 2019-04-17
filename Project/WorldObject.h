@@ -21,6 +21,7 @@ protected:
 public:
   //  virtual void draw();
    Point* getPosition();
+   void setPosition(int x, int y);
     
 };
 
