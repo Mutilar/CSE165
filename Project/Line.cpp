@@ -23,8 +23,8 @@ void Line::draw(Point *camera_position)
     glColor3f(0, 0, 0);
     glBegin(GL_LINES);
    //std::cout << start->getX() + camera_position->getX() << "\n";
-    glVertex2f(start->getX() + camera_position->getX(), 2000 - start->getY() + camera_position->getY());
-    glVertex2f(end->getX() + camera_position->getX(), 2000 - end->getY() + camera_position->getY());
+    glVertex2f(start->getX() + camera_position->getX(), start->getY() + camera_position->getY());
+    glVertex2f(end->getX() + camera_position->getX(), end->getY() + camera_position->getY());
     glEnd();
 }
 void Line::setStartPoint(int x, int y)
