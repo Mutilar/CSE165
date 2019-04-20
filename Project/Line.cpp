@@ -22,7 +22,7 @@ void Line::draw(Point *camera_position)
     glLineWidth(1000);
     glColor3f(0, 0, 0);
     glBegin(GL_LINES);
-    std::cout << start->getX() + camera_position->getX() << "\n";
+   //std::cout << start->getX() + camera_position->getX() << "\n";
     glVertex2f(start->getX() + camera_position->getX(), 2000 - start->getY() + camera_position->getY());
     glVertex2f(end->getX() + camera_position->getX(), 2000 - end->getY() + camera_position->getY());
     glEnd();

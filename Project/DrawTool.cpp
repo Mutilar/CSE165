@@ -8,7 +8,7 @@ DrawTool::DrawTool() {
 void DrawTool::draw(std::vector<Line*> lines, Point* camera_position) {
     ghost_line->draw(camera_position);
     for(std::vector<Line*>::iterator it = lines.begin(); it != lines.end(); ++it) {
-       std::cout << "test\n";
+    //    std::cout << "test\n";
        Line* temp_line = *it;
        temp_line->draw(camera_position);
     }

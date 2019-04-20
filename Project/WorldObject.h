@@ -9,27 +9,24 @@
 #include <GL/freeglut.h>
 #endif
 
-
 #include "Point.h"
 
-class WorldObject {
+class WorldObject
+{
 
 protected:
-    Point* position;
-    
-    
+  Point *position;
+
 public:
   //  virtual void draw();n
-   Point* getPosition();
-   int getPositionX();
-   int getPositionY();
+  Point *getPosition();
+  int getPositionX();
+  int getPositionY();
 
-
-   void setPosition(int x, int y);
-    
+  void setPosition(int x, int y);
+  void setPosition(Point* point);
+  void setPositionX(int x);
+  void setPositionY(int y);
 };
 
 #endif
-
-
-
