@@ -1,15 +1,16 @@
 #include "Player.h"
 #include <iostream>
 #include <vector>
+#include <math.h>      
 
 Player::Player()
 {
-	this->position = new Point(0,0);
+	this->position = new Point(400,400);
 }
 
-void Player::step()
+void Player::step(std::vector<Line*> &lines)
 {
-
+	this->rotation += .1;
 
 	//cast 3 rays
 	//update rotation
@@ -17,17 +18,43 @@ void Player::step()
 
 }
 
-void Player::draw()
-{ //Point* camera_position) {
+bool Player::IsIntersecting(Point a, Point b, Point c, Point d)
+{
+    float denominator = ((b.getX() - a.getX()) * (d.getY() - c.getY())) - ((b.getY() - a.getY()) * (d.getX() - c.getX()));
+    float numerator1 = ((a.getY() - c.getY()) * (d.getX() - c.getX())) - ((a.getX() - c.getX()) * (d.getY() - c.getY()));
+    float numerator2 = ((a.getY() - c.getY()) * (b.getX() - a.getX())) - ((a.getX() - c.getX()) * (b.getY() - a.getY()));
+
+    // Detect coincident lines (has a problem, read below)
+    if (denominator == 0) return numerator1 == 0 && numerator2 == 0;
+
+    float r = numerator1 / denominator;
+    float s = numerator2 / denominator;
+
+    return (r >= 0 && r <= 1) && (s >= 0 && s <= 1);
 }
 
 void Player::drawSet(int *points, int num_points, Point *camera_position, int r, int g, int b)
 {
 	glColor3f(r, g, b);
 	glBegin(GL_POLYGON);
+	int min_x = points[0], min_y = points[1], max_x = points[0], max_y = points[1];
 	for (int i = 0; i < num_points; i += 2)
-		glVertex2f(points[i] + this->getPositionX() + camera_position->getX(), 350 - points[i + 1] + this->getPositionY() + camera_position->getY());
+	{
+		if (points[i] < min_x) min_x = points[i];
+		if (points[i] > max_x) max_x = points[i];
+
+		if (points[i+1] < min_y) min_y = points[i+1];
+		if (points[i+1] > max_y) max_y = points[i+1];
+
+		float x =  points[i] - 150;//246/2;
+		float y = 300 - points[i + 1];
+		glVertex2f(this->getPositionX() + camera_position->getX() + cos(rotation) * x + sin(rotation) * y,this->getPositionY() + camera_position->getY() + -sin(rotation) * x + cos(rotation) * y);
+	}
+	std::cout << "min: " << min_x << "," << min_y << "; max: " << max_x << ", " << max_y << "\n";
 	glEnd();
+
+	
+
 }
 
 void Player::draw(Point *camera_position)
@@ -56,4 +83,17 @@ void Player::draw(Point *camera_position)
 	drawSet(chest_overlay_points, sizeof(chest_overlay_points) / sizeof(*chest_overlay_points), camera_position, 1, 1, 1);
 	drawSet(hat_points, sizeof(hat_points) / sizeof(*hat_points), camera_position, 0, 0, 0);
 	drawSet(chest_points, sizeof(chest_points) / sizeof(*chest_points), camera_position, 0, 0, 0);
+
+
+	//Player Centerpoint
+	glColor3f(0, 1, 0);
+    glBegin(GL_LINES);
+    glVertex2f(this->getPositionX() + camera_position->getX() - 10, this->getPositionY() + camera_position->getY() );
+    glVertex2f(this->getPositionX() + camera_position->getX() + 10, this->getPositionY() + camera_position->getY() );
+    glEnd();
+	glBegin(GL_LINES);
+    glVertex2f(this->getPositionX() + camera_position->getX(), this->getPositionY() + camera_position->getY() - 10);
+    glVertex2f(this->getPositionX() + camera_position->getX(), this->getPositionY() + camera_position->getY() + 10 );
+    glEnd();
+
 }

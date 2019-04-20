@@ -25,7 +25,7 @@ DrawTool* World::getDrawTool() {
 }
 
 void World::step() {
-   player->step();
+   player->step(this->lines);
    camera->step();
 }
 

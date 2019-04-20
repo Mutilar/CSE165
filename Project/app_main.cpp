@@ -109,7 +109,6 @@ void appMouseFunc(int b, int s, int x, int y)
 	float my = (float)y;
 
 	windowToScene(mx, my);
-
 	
 	game->mouseDown(b, s, (int)mx, (int)my);	
 }
@@ -127,7 +126,7 @@ void appMotionFunc(int x, int y)
 
 	windowToScene(mx, my);
 
-	game->mouseDrag( (int)mx, (int)my);
+	game->mouseDrag((int)mx, (int)my);
 }
 
 //-------------------------------------------------------
