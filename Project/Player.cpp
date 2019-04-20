@@ -5,7 +5,7 @@
 
 Player::Player()
 {
-	this->position = new Point(400, 400);
+	this->position = new Point(1000, 1000);
 	this->rotation = 0;
 
 	this->left_raycast_start = new Point(-100, 0);
@@ -46,19 +46,19 @@ void Player::step(std::vector<Line *> &lines)
 		this->setPositionY(this->getPositionY() - 1);
 	}
 	if (left_hit && middle_hit && !right_hit) {
-		this->rotation += .05;
+		this->rotation += .005;
 	}
 	if (left_hit && !middle_hit && !right_hit) {
-		this->rotation += .1;
+		this->rotation += .01;
 	}
 	if (!left_hit && middle_hit && right_hit) {
-		this->rotation -= .05;
+		this->rotation -= .005;
 	}
 	if (!left_hit && !middle_hit && right_hit) {
-		this->rotation -= .1;
+		this->rotation -= .01;
 	}
 
-	this->setPosition(this->toRelativeSpace(new Point(1, 0)));
+	this->setPosition(this->toRelativeSpace(new Point(sin(rotation) * 10, 0)));
 
 	//this->rotation += .1;
 

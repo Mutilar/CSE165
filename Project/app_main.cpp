@@ -110,7 +110,7 @@ void appMouseFunc(int b, int s, int x, int y)
 
 	windowToScene(mx, my);
 	
-	game->mouseDown(b, s, (int)mx, (int)my);	
+	game->mouseDown(b, s, (int)mx, 2000- (int)my);	
 }
 
 //-------------------------------------------------------
@@ -126,7 +126,7 @@ void appMotionFunc(int x, int y)
 
 	windowToScene(mx, my);
 
-	game->mouseDrag((int)mx, (int)my);
+	game->mouseDrag((int)mx, 2000 - (int)my);
 }
 
 //-------------------------------------------------------
@@ -152,7 +152,7 @@ void idle() { }
 void timer(int id) {
    game->step();
    game->draw();
-   glutTimerFunc(100, timer, id);
+   glutTimerFunc(10, timer, id);
 }
 
 
