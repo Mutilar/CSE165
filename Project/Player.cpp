@@ -5,7 +5,7 @@
 
 Player::Player()
 {
-	this->position = new Point(1000, 1000);
+	this->position = new Point(0000, 2000);
 	this->rotation = 0;
 
 	this->left_raycast_start = new Point(-100, 0);
@@ -15,6 +15,9 @@ Player::Player()
 	this->left_raycast_end = new Point(-100, -100);
 	this->middle_raycast_end = new Point(0, -100);
 	this->right_raycast_end = new Point(100, -100);
+
+
+
 }
 
 void Player::step(std::vector<Line *> &lines)
@@ -26,8 +29,11 @@ void Player::step(std::vector<Line *> &lines)
 	Point* r_s = this->toRelativeSpace(this->right_raycast_start); 
 	Point* r_e = this->toRelativeSpace(this->right_raycast_end); 
 
+	Point* base_s = this->toRelativeSpace(new Point (-100, -80)); 
+	Point* base_e = this->toRelativeSpace(new Point (100, -80)); 
 
-	bool left_hit = false, middle_hit = false, right_hit = false;
+
+	bool left_hit = false, middle_hit = false, right_hit = false, base_hit = false;
 	for(std::vector<Line*>::iterator it = lines.begin(); it != lines.end(); ++it) {
 		Line* line = *it;
 		if (this->IsIntersecting(line->getStartPoint(), line->getEndPoint(), l_s, l_e)) {
@@ -39,11 +45,18 @@ void Player::step(std::vector<Line *> &lines)
 		if (this->IsIntersecting(line->getStartPoint(), line->getEndPoint(), r_s, r_e)) {
 			right_hit = true;
 		}
+		if (this->IsIntersecting(line->getStartPoint(), line->getEndPoint(), base_s, base_e)) {
+			base_hit = true;
+		}
 	}
 	std::cout << "hits: " << left_hit << ", " << middle_hit << ", " << right_hit << "\n";
 
-	if (!left_hit && !middle_hit && !right_hit) {
-		this->setPositionY(this->getPositionY() - 1);
+	if (base_hit) {
+		this->setPosition(this->toRelativeSpace(new Point(0, 10)));
+	}
+	else if (!left_hit && !middle_hit && !right_hit) {
+		this->setPosition(this->toRelativeSpace(new Point(0, -10)));
+		// this->setPositionY(this->getPositionY() - 1);
 	}
 	if (left_hit && middle_hit && !right_hit) {
 		this->rotation += .005;
@@ -58,7 +71,7 @@ void Player::step(std::vector<Line *> &lines)
 		this->rotation -= .01;
 	}
 
-	this->setPosition(this->toRelativeSpace(new Point(sin(rotation) * 10, 0)));
+	this->setPosition(this->toRelativeSpace(new Point( 1 + sin(rotation) * 10, 0)));
 
 	//this->rotation += .1;
 
