@@ -4,16 +4,16 @@
 class Point {
 
 private:
-    int x, y;
+    float  x, y;
     
 public:
-    Point(int x, int y);  
-    int getX();
-    int getY();	
-    void setX(int x);
-    void setY(int y);
-    void shiftX(int x_adj);
-    void shiftY(int y_adj);
+    Point(float  x, float  y);  
+    float  getX();
+    float  getY();	
+    void setX(float  x);
+    void setY(float  y);
+    void shiftX(float  x_adj);
+    void shiftY(float  y_adj);
 };
 
 #endif

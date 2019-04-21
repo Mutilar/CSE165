@@ -20,13 +20,13 @@ protected:
 public:
   //  virtual void draw();n
   Point *getPosition();
-  int getPositionX();
-  int getPositionY();
+  float getPositionX();
+  float getPositionY();
 
-  void setPosition(int x, int y);
+  void setPosition(float  x, float  y);
   void setPosition(Point* point);
-  void setPositionX(int x);
-  void setPositionY(int y);
+  void setPositionX(float  x);
+  void setPositionY(float  y);
   void shift(Point* direction);
 };
 

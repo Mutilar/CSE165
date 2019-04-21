@@ -21,13 +21,11 @@ class Player : public WorldObject
     float rotation; //in degrees, probably
     Point* velocity;
 
-    Point *left_raycast_start;
-    Point *middle_raycast_start;
-    Point *right_raycast_start;
+    Point *clipping_check_start;
+    Point *clipping_check_end;
 
-    Point *left_raycast_end;
-    Point *middle_raycast_end;
-    Point *right_raycast_end;
+    Point *ground_check_start;
+    Point *ground_check_end;
 
     void drawSet(int *points, int num_points, Point *camera_position, int r, int g, int b);
 

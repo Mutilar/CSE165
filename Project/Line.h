@@ -21,10 +21,10 @@ class Line : public WorldObject
 
   public:
     Line();
-    Line(int x1, int y1, int x2, int y2);
+    Line(float x1, float y1, float x2, float y2);
     void draw(Point *camera_position);
-    void setStartPoint(int x, int y);
-    void setEndPoint(int x, int y);
+    void setStartPoint(float x, float y);
+    void setEndPoint(float x, float y);
 
     Point* getStartPoint();
     Point* getEndPoint();
