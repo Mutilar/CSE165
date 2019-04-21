@@ -27,6 +27,7 @@ public:
   void setPosition(Point* point);
   void setPositionX(int x);
   void setPositionY(int y);
+  void shift(Point* direction);
 };
 
 #endif
