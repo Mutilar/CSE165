@@ -22,6 +22,7 @@ class Line : public WorldObject
   public:
     Line();
     Line(float x1, float y1, float x2, float y2);
+    Line(Point* start, Point* end);
     void draw(Point *camera_position);
     void setStartPoint(float x, float y);
     void setEndPoint(float x, float y);

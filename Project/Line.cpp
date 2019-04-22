@@ -16,6 +16,13 @@ Line::Line(float  x1, float  y1, float  x2, float  y2)
     //this->start = start;
     //this->end = end;
 }
+Line::Line(Point* start, Point* end)
+{
+    this->start = start;
+    this->end = end;
+    //this->start = start;
+    //this->end = end;
+}
 
 void Line::draw(Point *camera_position)
 {

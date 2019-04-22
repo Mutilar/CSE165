@@ -152,7 +152,7 @@ void idle() { }
 void timer(int id) {
    game->step();
    game->draw();
-   glutTimerFunc(100, timer, id);
+   glutTimerFunc(50, timer, id);
 }
 
 
