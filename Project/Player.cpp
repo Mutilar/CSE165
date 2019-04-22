@@ -32,12 +32,9 @@ void Player::step(std::vector<Line *> &lines)
 		{
 			if (line->getEndPoint()->getX() > line->getStartPoint()->getX())
 			{
-				std::cout<<"case 1\n";
 				slope_contacted = 1.0 * (line->getEndPoint()->getY() - line->getStartPoint()->getY()) / (line->getEndPoint()->getX() - line->getStartPoint()->getX());
-			
 			} else {
-				std::cout<<"case 1\n";
-				slope_contacted = 1.0 * (line->getEndPoint()->getY() - line->getStartPoint()->getY()) / (line->getStartPoint()->getX() - line->getEndPoint()->getX());
+				slope_contacted = -1.0 * (line->getEndPoint()->getY() - line->getStartPoint()->getY()) / (line->getStartPoint()->getX() - line->getEndPoint()->getX());
 			}
 			middle_hit = true;
 			break;
@@ -53,7 +50,7 @@ void Player::step(std::vector<Line *> &lines)
 	}
 	else
 	{
-		this->velocity->shiftY(-.1);
+		this->velocity->shiftY(-.5);
 	}
 	this->shift(this->velocity);
 
