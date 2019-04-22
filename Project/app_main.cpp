@@ -138,6 +138,7 @@ void appMotionFunc(int x, int y)
 //-------------------------------------------------------
 void appKeyboardFunc(unsigned char key, int x, int y)
 {
+`	//To do: check for arrow, wasd keys to shift camera position manually (versus staying on player)
 
 	if (key == 27)
 	{
