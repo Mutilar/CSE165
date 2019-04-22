@@ -21,13 +21,9 @@ class Player : public WorldObject
     float rotation; //in degrees, probably
     Point* velocity;
 
-    Point *left_raycast_start;
-    Point *middle_raycast_start;
-    Point *right_raycast_start;
+    Line *clipping_ray;
 
-    Point *left_raycast_end;
-    Point *middle_raycast_end;
-    Point *right_raycast_end;
+    Line *ground_check_ray;
 
     void drawSet(int *points, int num_points, Point *camera_position, int r, int g, int b);
 
@@ -37,11 +33,15 @@ class Player : public WorldObject
     // void setPosition(Point position);
     void draw(Point *camera_position);
     void step(std::vector<Line *> &lines); //adjusts rotation, velocity based on raycasts
+    
+    Line* getIntersectingLine(std::vector<Line *> &lines, Line* ray);
 
+    bool IsIntersecting(Line* a, Line* b);
     bool IsIntersecting(Point *a, Point *b, Point *c, Point *d);
     void drawRaycast(Point *start, Point *end, Point *camera_position);
 
     Point* toRelativeSpace(Point *point);
+    Line* toRelativeSpace(Line *line);
 };
 
 #endif

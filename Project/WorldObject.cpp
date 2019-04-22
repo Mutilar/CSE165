@@ -4,7 +4,7 @@ Point *WorldObject::getPosition()
 {
     return this->position;
 }
-void WorldObject::setPosition(int x, int y)
+void WorldObject::setPosition(float x, float y)
 {
     this->position->setX(x);
     this->position->setY(y);
@@ -15,19 +15,19 @@ void WorldObject::setPosition(Point *point)
     this->position->setY(point->getY());
 }
 
-int WorldObject::getPositionX()
+float WorldObject::getPositionX()
 {
     return this->position->getX();
 }
-int WorldObject::getPositionY()
+float WorldObject::getPositionY()
 {
     return this->position->getY();
 }
-void WorldObject::setPositionX(int x)
+void WorldObject::setPositionX(float x)
 {
     this->position->setX(x);
 }
-void WorldObject::setPositionY(int y)
+void WorldObject::setPositionY(float y)
 {
     this->position->setY(y);
 }

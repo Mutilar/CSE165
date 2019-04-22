@@ -5,69 +5,94 @@
 
 Player::Player()
 {
-	this->position = new Point(1000, 1000);
+	this->position = new Point(200, 2000);
 	this->rotation = 0;
 	this->velocity = new Point(0, 0);
 
-	this->clipping_check_start = new Point(0, 0);
-	this->clipping_check_end = new Point(0, -90);
-
-	this->ground_check_start = new Point(0, -90);
-	this->ground_check_end = new Point(0, -100);
+	this->clipping_ray = new Line(new Point(0, 0), new Point(0, -90));
+	this->ground_check_ray = new Line(new Point(0, -90), new Point(0, -100));
 }
 
 void Player::step(std::vector<Line *> &lines)
 {
-	Point *c_s = this->toRelativeSpace(this->clipping_check_start);
-	Point *c_e = this->toRelativeSpace(this->clipping_check_end);
-
-	Point *m_s = this->toRelativeSpace(this->ground_check_start);
-	Point *m_e = this->toRelativeSpace(this->ground_check_end);
-
 	float slope_contacted = 0;
 	bool clip_hit = false, middle_hit = false;
-	Line *line;
 
-	for (std::vector<Line *>::iterator it = lines.begin(); it != lines.end(); ++it)
+	Line *hit = getIntersectingLine(lines, this->toRelativeSpace(ground_check_ray));
+	if (hit != NULL)
 	{
-		line = *it;
-		if (this->IsIntersecting(line->getStartPoint(), line->getEndPoint(), m_s, m_e))
+		if (hit->getEndPoint()->getX() > hit->getStartPoint()->getX())
 		{
-			slope_contacted = (line->getEndPoint().getY() - line->getStartPoint().getY()) / (line->getEndPoint().getX() - line->getStartPoint().getX());
-			middle_hit = true;
-			break;
+			slope_contacted = 1.0 * (hit->getEndPoint()->getY() - hit->getStartPoint()->getY()) / (hit->getEndPoint()->getX() - hit->getStartPoint()->getX());
 		}
+		else
+		{
+			slope_contacted = -1.0 * (hit->getEndPoint()->getY() - hit->getStartPoint()->getY()) / (hit->getStartPoint()->getX() - hit->getEndPoint()->getX());
+		}
+		middle_hit = true;
 	}
 	if (middle_hit)
 	{
-		std::cout << "Grounded, going " << this->velocity->getX() << "\n";
-		this->velocity->shiftX(slope_contacted);
-		this->velocity->shiftY(slope_contacted);
+		std::cout << "Grounded, on slope " << slope_contacted << "\n";
+		this->velocity->shiftX(-slope_contacted);
+		// this->velocity->setY(-slope_contacted);
 	}
 	else
 	{
-		this->velocity->shiftY(-1);
+		this->velocity->shiftY(-.5);
 	}
+
 	this->shift(this->velocity);
 
 	while (true)
 	{
 		clip_hit = false;
-		for (std::vector<Line *>::iterator it = lines.begin(); it != lines.end(); ++it)
+		Line *hit = getIntersectingLine(lines, this->toRelativeSpace(clipping_ray));
+		if (hit != NULL)
 		{
-			line = *it;
-			if (this->IsIntersecting(line->getStartPoint(), line->getEndPoint(), c_s, c_e))
-			{
-				clip_hit = true;
-				this->shift(new Point(0, 1));
-				break;
-			}
+			this->shift(new Point(0, 1));
 		}
-		if (clip_hit == false)
+		else
 		{
 			break;
 		}
 	}
+	if (middle_hit)
+	{
+		int count = 0;
+		while (count < 20)
+		{
+			count++;
+			Line *hit = getIntersectingLine(lines, this->toRelativeSpace(ground_check_ray));
+			if (hit == NULL)
+			{
+				this->shift(new Point(0, -1));
+			}
+			else
+			{
+				break;
+			}
+		}
+	}
+}
+
+Line *Player::getIntersectingLine(std::vector<Line *> &lines, Line *ray)
+{
+	Line *line;
+	for (std::vector<Line *>::iterator it = lines.begin(); it != lines.end(); ++it)
+	{
+		Line *line = *it;
+		if (this->IsIntersecting(line, ray))
+		{
+			return line;
+		}
+	}
+	return NULL;
+}
+
+bool Player::IsIntersecting(Line *a, Line *b)
+{
+	return this->IsIntersecting(a->getStartPoint(), a->getEndPoint(), b->getStartPoint(), b->getEndPoint());
 }
 
 bool Player::IsIntersecting(Point *a, Point *b, Point *c, Point *d)
@@ -116,6 +141,10 @@ Point *Player::toRelativeSpace(Point *point)
 {
 	return new Point(this->getPositionX() + cos(rotation) * point->getX() + sin(rotation) * point->getY(), this->getPositionY() + -sin(rotation) * point->getX() + cos(rotation) * point->getY());
 }
+Line *Player::toRelativeSpace(Line *line)
+{
+	return new Line(this->toRelativeSpace(line->getStartPoint()), this->toRelativeSpace(line->getEndPoint()));
+}
 
 void Player::draw(Point *camera_position)
 {
@@ -144,9 +173,7 @@ void Player::draw(Point *camera_position)
 	drawSet(hat_points, sizeof(hat_points) / sizeof(*hat_points), camera_position, 0, 0, 0);
 	drawSet(chest_points, sizeof(chest_points) / sizeof(*chest_points), camera_position, 0, 0, 0);
 
-	Point *m_s = this->toRelativeSpace(this->ground_check_start);
-	Point *m_e = this->toRelativeSpace(this->ground_check_end);
-	this->drawRaycast(m_s, m_e, camera_position);
+	// this->drawRaycast(m_s, m_e, camera_position);
 }
 
 void Player::drawRaycast(Point *start, Point *end, Point *camera_position)

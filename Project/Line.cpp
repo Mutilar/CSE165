@@ -9,10 +9,17 @@ Line::Line()
     //this->end = end;
 }
 
-Line::Line(int x1, int y1, int x2, int y2)
+Line::Line(float  x1, float  y1, float  x2, float  y2)
 {
     this->start = new Point(x1, y1);
     this->end = new Point(x2, y2);
+    //this->start = start;
+    //this->end = end;
+}
+Line::Line(Point* start, Point* end)
+{
+    this->start = start;
+    this->end = end;
     //this->start = start;
     //this->end = end;
 }
@@ -27,12 +34,12 @@ void Line::draw(Point *camera_position)
     glVertex2f(end->getX() + camera_position->getX(), end->getY() + camera_position->getY());
     glEnd();
 }
-void Line::setStartPoint(int x, int y)
+void Line::setStartPoint(float x, float y)
 {
     this->start->setX(x);
     this->start->setY(y);
 }
-void Line::setEndPoint(int x, int y)
+void Line::setEndPoint(float x, float y)
 {
     this->end->setX(x);
     this->end->setY(y);
