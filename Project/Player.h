@@ -19,7 +19,7 @@ class Player : public WorldObject
 
   private:
     float rotation; //in degrees, probably
-    float velocity;
+    Point* velocity;
 
     Point *left_raycast_start;
     Point *middle_raycast_start;

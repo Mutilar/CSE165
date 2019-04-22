@@ -7,68 +7,70 @@ Player::Player()
 {
 	this->position = new Point(1000, 1000);
 	this->rotation = 0;
+	this->velocity = new Point(0, 0);
 
-	this->left_raycast_start = new Point(-100, 0);
-	this->middle_raycast_start = new Point(0, 0);
-	this->right_raycast_start = new Point(100, 0);
+	this->clipping_check_start = new Point(0, 0);
+	this->clipping_check_end = new Point(0, -90);
 
-	this->left_raycast_end = new Point(-100, -100);
-	this->middle_raycast_end = new Point(0, -100);
-	this->right_raycast_end = new Point(100, -100);
+	this->ground_check_start = new Point(0, -90);
+	this->ground_check_end = new Point(0, -100);
 }
 
 void Player::step(std::vector<Line *> &lines)
 {
-	Point* l_s = this->toRelativeSpace(this->left_raycast_start); 
-	Point* l_e = this->toRelativeSpace(this->left_raycast_end); 
-	Point* m_s = this->toRelativeSpace(this->middle_raycast_start); 
-	Point* m_e = this->toRelativeSpace(this->middle_raycast_end);  
-	Point* r_s = this->toRelativeSpace(this->right_raycast_start); 
-	Point* r_e = this->toRelativeSpace(this->right_raycast_end); 
+	Point *c_s = this->toRelativeSpace(this->clipping_check_start);
+	Point *c_e = this->toRelativeSpace(this->clipping_check_end);
 
+	Point *m_s = this->toRelativeSpace(this->ground_check_start);
+	Point *m_e = this->toRelativeSpace(this->ground_check_end);
 
-	bool left_hit = false, middle_hit = false, right_hit = false;
-	for(std::vector<Line*>::iterator it = lines.begin(); it != lines.end(); ++it) {
-		Line* line = *it;
-		if (this->IsIntersecting(line->getStartPoint(), line->getEndPoint(), l_s, l_e)) {
-			left_hit = true;
-		}
-		if (this->IsIntersecting(line->getStartPoint(), line->getEndPoint(), m_s, m_e)) {
+	float slope_contacted = 0;
+	bool clip_hit = false, middle_hit = false;
+	Line *line;
+
+	for (std::vector<Line *>::iterator it = lines.begin(); it != lines.end(); ++it)
+	{
+		line = *it;
+		if (this->IsIntersecting(line->getStartPoint(), line->getEndPoint(), m_s, m_e))
+		{
+			slope_contacted = (line->getEndPoint().getY() - line->getStartPoint().getY()) / (line->getEndPoint().getX() - line->getStartPoint().getX());
 			middle_hit = true;
-		}
-		if (this->IsIntersecting(line->getStartPoint(), line->getEndPoint(), r_s, r_e)) {
-			right_hit = true;
+			break;
 		}
 	}
-	std::cout << "hits: " << left_hit << ", " << middle_hit << ", " << right_hit << "\n";
-
-	if (!left_hit && !middle_hit && !right_hit) {
-		this->setPositionY(this->getPositionY() - 1);
+	if (middle_hit)
+	{
+		std::cout << "Grounded, going " << this->velocity->getX() << "\n";
+		this->velocity->shiftX(slope_contacted);
+		this->velocity->shiftY(slope_contacted);
 	}
-	if (left_hit && middle_hit && !right_hit) {
-		this->rotation += .005;
+	else
+	{
+		this->velocity->shiftY(-1);
 	}
-	if (left_hit && !middle_hit && !right_hit) {
-		this->rotation += .01;
+	this->shift(this->velocity);
+
+	while (true)
+	{
+		clip_hit = false;
+		for (std::vector<Line *>::iterator it = lines.begin(); it != lines.end(); ++it)
+		{
+			line = *it;
+			if (this->IsIntersecting(line->getStartPoint(), line->getEndPoint(), c_s, c_e))
+			{
+				clip_hit = true;
+				this->shift(new Point(0, 1));
+				break;
+			}
+		}
+		if (clip_hit == false)
+		{
+			break;
+		}
 	}
-	if (!left_hit && middle_hit && right_hit) {
-		this->rotation -= .005;
-	}
-	if (!left_hit && !middle_hit && right_hit) {
-		this->rotation -= .01;
-	}
-
-	this->setPosition(this->toRelativeSpace(new Point(sin(rotation) * 10, 0)));
-
-	//this->rotation += .1;
-
-
-	//cast 3 rays
-	//update rotation
-	//update speed
 }
 
-bool Player::IsIntersecting(Point* a, Point* b, Point* c, Point* d)
+bool Player::IsIntersecting(Point *a, Point *b, Point *c, Point *d)
 {
 	float denominator = ((b->getX() - a->getX()) * (d->getY() - c->getY())) - ((b->getY() - a->getY()) * (d->getX() - c->getX()));
 	float numerator1 = ((a->getY() - c->getY()) * (d->getX() - c->getX())) - ((a->getX() - c->getX()) * (d->getY() - c->getY()));
@@ -103,14 +105,15 @@ void Player::drawSet(int *points, int num_points, Point *camera_position, int r,
 
 		float x = points[i] - 150; //246/2;
 		float y = 300 - points[i + 1];
-		Point* relative_point = this->toRelativeSpace(new Point(x, y));
-		glVertex2f(camera_position->getX() + relative_point->getX(),  camera_position->getY() + relative_point->getY());
+		Point *relative_point = this->toRelativeSpace(new Point(x, y));
+		glVertex2f(camera_position->getX() + relative_point->getX(), camera_position->getY() + relative_point->getY());
 	}
 	//std::cout << "min: " << min_x << "," << min_y << "; max: " << max_x << ", " << max_y << "\n";
 	glEnd();
 }
 
-Point* Player::toRelativeSpace(Point *point) {
+Point *Player::toRelativeSpace(Point *point)
+{
 	return new Point(this->getPositionX() + cos(rotation) * point->getX() + sin(rotation) * point->getY(), this->getPositionY() + -sin(rotation) * point->getX() + cos(rotation) * point->getY());
 }
 
@@ -141,30 +144,17 @@ void Player::draw(Point *camera_position)
 	drawSet(hat_points, sizeof(hat_points) / sizeof(*hat_points), camera_position, 0, 0, 0);
 	drawSet(chest_points, sizeof(chest_points) / sizeof(*chest_points), camera_position, 0, 0, 0);
 
-	Point* l_s = this->toRelativeSpace(this->left_raycast_start); 
-	Point* l_e = this->toRelativeSpace(this->left_raycast_end); 
-	Point* m_s = this->toRelativeSpace(this->middle_raycast_start); 
-	Point* m_e = this->toRelativeSpace(this->middle_raycast_end);  
-	Point* r_s = this->toRelativeSpace(this->right_raycast_start); 
-	Point* r_e = this->toRelativeSpace(this->right_raycast_end); 
-
-
-	this->drawRaycast(l_s, l_e, camera_position);
+	Point *m_s = this->toRelativeSpace(this->ground_check_start);
+	Point *m_e = this->toRelativeSpace(this->ground_check_end);
 	this->drawRaycast(m_s, m_e, camera_position);
-	this->drawRaycast(r_s, r_e, camera_position);
 }
 
 void Player::drawRaycast(Point *start, Point *end, Point *camera_position)
 {
 
-	//Player Centerpoint
 	glColor3f(0, 1, 0);
 	glBegin(GL_LINES);
-	glVertex2f(start->getX() + camera_position->getX() - 10, start->getY() + camera_position->getY());
-	glVertex2f(end->getX() + camera_position->getX() + 10, end->getY() + camera_position->getY());
-	glEnd();
-	glBegin(GL_LINES);
-	glVertex2f(start->getX() + camera_position->getX(), start->getY() + camera_position->getY() - 10);
-	glVertex2f(end->getX() + camera_position->getX(), end->getY() + camera_position->getY() + 10);
+	glVertex2f(start->getX() + camera_position->getX(), start->getY() + camera_position->getY());
+	glVertex2f(end->getX() + camera_position->getX(), end->getY() + camera_position->getY());
 	glEnd();
 }

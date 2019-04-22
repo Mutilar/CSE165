@@ -12,6 +12,8 @@ public:
     int getY();	
     void setX(int x);
     void setY(int y);
+    void shiftX(int x_adj);
+    void shiftY(int y_adj);
 };
 
 #endif
