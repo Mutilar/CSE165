@@ -30,8 +30,15 @@ void Player::step(std::vector<Line *> &lines)
 		line = *it;
 		if (this->IsIntersecting(line->getStartPoint(), line->getEndPoint(), m_s, m_e))
 		{
-			if (line->getEndPoint()->getX() > line->getStartPoint()->getX()) slope_contacted = 1.0 * (line->getEndPoint()->getY() - line->getStartPoint()->getY()) / (line->getEndPoint()->getX() - line->getStartPoint()->getX());
-			else slope_contacted = 1.0 * (line->getEndPoint()->getY() - line->getStartPoint()->getY()) / (line->getStartPoint()->getX() - line->getEndPoint()->getX());
+			if (line->getEndPoint()->getX() > line->getStartPoint()->getX())
+			{
+				std::cout<<"case 1\n";
+				slope_contacted = 1.0 * (line->getEndPoint()->getY() - line->getStartPoint()->getY()) / (line->getEndPoint()->getX() - line->getStartPoint()->getX());
+			
+			} else {
+				std::cout<<"case 1\n";
+				slope_contacted = 1.0 * (line->getEndPoint()->getY() - line->getStartPoint()->getY()) / (line->getStartPoint()->getX() - line->getEndPoint()->getX());
+			}
 			middle_hit = true;
 			break;
 		}
