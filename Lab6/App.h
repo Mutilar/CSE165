@@ -9,8 +9,10 @@ class App: public GlutApp {
     
     TexRect* mushroom;
     Rect* projectile;
+    AnimatedRect* explosion;
     
     bool up;
+    int explos_counter;
 public:
     
     App(int argc, char** argv, int width, int height, const char* title);
