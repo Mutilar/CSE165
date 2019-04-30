@@ -9,7 +9,6 @@
 #include <GL/freeglut.h>
 #endif
 
-
 #include "WorldObject.h"
 #include "Point.h"
 
@@ -24,6 +23,3 @@ public:
 };
 
 #endif
-
-
-

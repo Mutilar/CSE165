@@ -11,14 +11,13 @@
 
 #include "Line.h"
 #include "World.h"
+#include "UI.h"
 
-
-
-class Game {
-
-
+class Game
+{
 private:
-    World* world;
+    World *world;
+    UI *ui;
 
     bool is_paused;
 
@@ -32,10 +31,6 @@ public:
     void mouseDrag(int x, int y);
 
     void togglePause();
-    
 };
 
 #endif
-
-
-

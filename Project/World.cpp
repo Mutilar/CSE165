@@ -33,7 +33,7 @@ std::vector<Line*> World::getLines() {
    return this->lines;
 }
 
-void World::setDrawState (bool state, int x, int y) {
+void World::setDrawState(bool state, int x, int y) {
    this->draw_tool->setState(this->lines, state, x, y);
 }
 

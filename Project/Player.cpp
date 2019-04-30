@@ -133,7 +133,7 @@ void Player::drawSet(int *points, int num_points, Point *camera_position, int r,
 		Point *relative_point = this->toRelativeSpace(new Point(x, y));
 		glVertex2f(camera_position->getX() + relative_point->getX(), camera_position->getY() + relative_point->getY());
 	}
-	//std::cout << "min: " << min_x << "," << min_y << "; max: " << max_x << ", " << max_y << "\n";
+	// std::cout << "min: " << min_x << "," << min_y << "; max: " << max_x << ", " << max_y << "\n";
 	glEnd();
 }
 
@@ -141,6 +141,7 @@ Point *Player::toRelativeSpace(Point *point)
 {
 	return new Point(this->getPositionX() + cos(rotation) * point->getX() + sin(rotation) * point->getY(), this->getPositionY() + -sin(rotation) * point->getX() + cos(rotation) * point->getY());
 }
+
 Line *Player::toRelativeSpace(Line *line)
 {
 	return new Line(this->toRelativeSpace(line->getStartPoint()), this->toRelativeSpace(line->getEndPoint()));

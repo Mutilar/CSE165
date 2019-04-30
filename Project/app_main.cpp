@@ -15,13 +15,13 @@
 using namespace std;
 
 // Store the width and height of the window
-int width = 640, height = 640;
+int width = 1280, height = 1960;
 
-Game* game;
+Game *game;
 
 void appDrawScene()
 {
- 	game->draw();
+	game->draw();
 }
 
 //-------------------------------------------------------
@@ -32,9 +32,9 @@ void appDrawScene()
 //-------------------------------------------------------
 void windowToScene(float &x, float &y)
 {
-	x = x/float(width) * 2000;
+	x = x / float(width) * 2000;
 
-	y = y/float(height) * 2000;
+	y = y / float(height) * 2000;
 }
 
 //-------------------------------------------------------
@@ -109,8 +109,8 @@ void appMouseFunc(int b, int s, int x, int y)
 	float my = (float)y;
 
 	windowToScene(mx, my);
-	
-	game->mouseDown(b, s, (int)mx, 2000- (int)my);	
+
+	game->mouseDown(b, s, (int)mx, 2000 - (int)my);
 }
 
 //-------------------------------------------------------
@@ -138,24 +138,22 @@ void appMotionFunc(int x, int y)
 //-------------------------------------------------------
 void appKeyboardFunc(unsigned char key, int x, int y)
 {
-`	//To do: check for arrow, wasd keys to shift camera position manually (versus staying on player)
+	//To do: check for arrow, wasd keys to shift camera position manually (versus staying on player)
 
-	if (key == 27)
-	{
-	}
+	if (key == 27) { }
 
 	// After all the state changes, redraw the scene
 	glutPostRedisplay();
 }
 
-void idle() { }
+void idle() {}
 
-void timer(int id) {
-   game->step();
-   game->draw();
-   glutTimerFunc(50, timer, id);
+void timer(int id)
+{
+	game->step();
+	game->draw();
+	glutTimerFunc(50, timer, id);
 }
-
 
 int main(int argc, char **argv)
 {
@@ -170,7 +168,7 @@ int main(int argc, char **argv)
 	game = new Game();
 	timer(0);
 
-	glutSetOption(GLUT_MULTISAMPLE, 8);
+	// glutSetOption(GLUT_MULTISAMPLE, 8);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH | GLUT_MULTISAMPLE);
 
 	glEnable(GL_DEPTH_TEST);

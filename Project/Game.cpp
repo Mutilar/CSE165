@@ -3,6 +3,7 @@
 Game::Game()
 {
 	world = new World();
+	ui = new UI();
 }
 
 void Game::draw()
@@ -11,6 +12,7 @@ void Game::draw()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	world->draw();
+	ui->draw();
 
 	// Set up the transformations stack
 	glMatrixMode(GL_MODELVIEW);
@@ -19,6 +21,7 @@ void Game::draw()
 	glFlush();
 	glutSwapBuffers();
 }
+
 void Game::step()
 {
 	world->step();
@@ -31,16 +34,16 @@ void Game::mouseDown(int b, int s, int x, int y)
 
 		//Check for if clicked on UI element
 
-		//else
-		{
+		//else {
 
-			world->setDrawState(!s, x, y);
-		}
+		world->setDrawState(!s, x, y);
+		// }
 	}
 
 	//
 	//glutPostRedisplay();
 }
+
 void Game::mouseDrag(int x, int y)
 {
 	world->getDrawTool()->drag(x, y);

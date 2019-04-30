@@ -1,0 +1,47 @@
+#include <iostream>
+#include <vector>
+#include <math.h>
+
+#include "Tool.h"
+
+Tool::Tool()
+{
+	this->position = new Point(200, 2000);
+	this->rotation = 0;
+}
+
+Point *Tool::toRelativeSpace(Point *point)
+{
+	return new Point(this->getPositionX() + cos(rotation) * point->getX() + sin(rotation) * point->getY(), this->getPositionY() + -sin(rotation) * point->getX() + cos(rotation) * point->getY());
+}
+
+void Tool::draw(float *points, int num_points, Point *camera_position, int r, int g, int b)
+{
+	glColor3f(r, g, b);
+
+	// std::cout<< num_points << "\n";
+
+	for (int i = 0; i < num_points; i++) {
+		std::cout << points[i] << "\n";
+	}
+
+	switch (num_points)
+	{
+	case 2:
+	{
+		// line->draw(points[0], points[1]);
+	}
+	case 3:
+	{
+		circle->draw(points[0], points[1], points[2]);
+		break;
+	}
+	case 4:
+	{
+		rect->draw(points[0], points[1], points[2], points[3]);
+		break;
+	}
+	default:
+		break;
+	}
+}
