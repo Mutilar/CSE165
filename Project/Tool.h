@@ -28,7 +28,7 @@ class Tool : public WorldObject
   public:
     Tool();
 
-    void draw(float *points, int num_points, Point *camera_position, int r, int g, int b);
+    void draw(float *points, int num_points, Point *camera_position, float r, float g, float b);
     Point* toRelativeSpace(Point *point);
 };
 

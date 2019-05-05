@@ -15,15 +15,15 @@ Point *Tool::toRelativeSpace(Point *point)
 	return new Point(this->getPositionX() + cos(rotation) * point->getX() + sin(rotation) * point->getY(), this->getPositionY() + -sin(rotation) * point->getX() + cos(rotation) * point->getY());
 }
 
-void Tool::draw(float *points, int num_points, Point *camera_position, int r, int g, int b)
+void Tool::draw(float *points, int num_points, Point *camera_position, float r, float g, float b)
 {
 	glColor3f(r, g, b);
 
 	// std::cout<< num_points << "\n";
 
-	for (int i = 0; i < num_points; i++) {
-		std::cout << points[i] << "\n";
-	}
+	// for (int i = 0; i < num_points; i++) {
+	// 	std::cout << points[i] << "\n";
+	// }
 
 	switch (num_points)
 	{
