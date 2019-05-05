@@ -38,7 +38,7 @@ void Tool::draw(float *points, int num_points, Point *camera_position, float r, 
 	}
 	case 4:
 	{
-		rect->draw(points[0], points[1], points[2], points[3]);
+		rect->Circle(points[0], points[1], points[2], points[3]);
 		break;
 	}
 	default:

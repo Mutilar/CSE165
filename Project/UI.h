@@ -16,11 +16,13 @@
 #include "DrawTool.h"
 #include "Camera.h"
 #include "Line.h"
+#include "TexRect.h"
 
 class UI {
 
 protected:
-  Tool *pen, *line, *eraser, *select, *move, *zoom, *blue, *red, *green;
+  TexRect *pen, *line, *eraser, *select, *move, *zoom;
+  Tool *blue, *red, *green;
   DrawTool* draw_tool;
   Camera *camera;
   
