@@ -110,6 +110,11 @@ void appMouseFunc(int b, int s, int x, int y)
 
 	windowToScene(mx, my);
 
+	// cout << "button: " << b << endl;
+	// cout << "state: " << s << endl;
+	// cout << "x: " << mx << endl;
+	// cout << "y: " << my << endl;
+
 	game->mouseDown(b, s, (int)mx, 2000 - (int)my);
 }
 
@@ -138,9 +143,35 @@ void appMotionFunc(int x, int y)
 //-------------------------------------------------------
 void appKeyboardFunc(unsigned char key, int x, int y)
 {
-	//To do: check for arrow, wasd keys to shift camera position manually (versus staying on player)
-
-	if (key == 27) { }
+	switch (key)
+	{
+	case 27:
+		exit(0);
+		break;
+	case ' ':
+		// TODO: restart game and make a new blank drawing board
+		game = new Game();
+		cout << "restarting the world" << endl;
+		break;
+	case 'p':
+		// TODO: implement pause
+		game->step(false);
+		cout << "pausing the game" << endl;
+		break;
+	case 'o':
+		// TODO: implement unpause
+		game->step(true);
+		cout << "unpausing the game" << endl;
+		break;
+	case 'w':
+	case 'a':
+	case 's':
+	case 'd':
+		// TODO: check for arrow, wasd keys to shift camera position manually (versus staying on player)
+		// camera->rePosition();
+		cout << "moving camera" << endl;
+		break;
+	}
 
 	// After all the state changes, redraw the scene
 	glutPostRedisplay();
@@ -150,7 +181,7 @@ void idle() {}
 
 void timer(int id)
 {
-	game->step();
+	game->step(true);
 	game->draw();
 	glutTimerFunc(50, timer, id);
 }

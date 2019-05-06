@@ -11,19 +11,19 @@
 
 #include "WorldObject.h"
 #include "Point.h"
-#include <vector>
 #include "Line.h"
+#include "TexRect.h"
+
+#include <vector>
 
 class Player : public WorldObject
 {
-
   private:
     float rotation; //in degrees, probably
     Point* velocity;
-
     Line *clipping_ray;
-
     Line *ground_check_ray;
+    TexRect* PlayerBody;
 
     void drawSet(int *points, int num_points, Point *camera_position, int r, int g, int b);
 

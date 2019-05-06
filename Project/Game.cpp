@@ -22,9 +22,9 @@ void Game::draw()
 	glutSwapBuffers();
 }
 
-void Game::step()
+void Game::step(bool state)
 {
-	world->step();
+	world->step(state);
 }
 
 void Game::mouseDown(int b, int s, int x, int y)

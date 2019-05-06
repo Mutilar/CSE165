@@ -5,6 +5,8 @@
 
 Player::Player()
 {
+	PlayerBody = new TexRect("images/player.png", 900, 1300, 100, 100);
+
 	this->position = new Point(200, 2000);
 	this->rotation = 0;
 	this->velocity = new Point(0, 0);
@@ -33,7 +35,7 @@ void Player::step(std::vector<Line *> &lines)
 	}
 	if (middle_hit)
 	{
-		std::cout << "Grounded, on slope " << slope_contacted << "\n";
+		//std::cout << "Grounded, on slope " << slope_contacted << "\n";
 		this->velocity->shiftX(-slope_contacted);
 		// this->velocity->setY(-slope_contacted);
 	}
@@ -149,6 +151,7 @@ Line *Player::toRelativeSpace(Line *line)
 
 void Player::draw(Point *camera_position)
 {
+	PlayerBody->draw(1.0);
 
 	int eye_points[] = {172, 112, 174, 107, 179, 105, 184, 107, 187, 112, 185, 117, 179, 119, 174, 117};
 	int scarf_points_1[] = {5, 155, 35, 160, 30, 188, 0, 180};

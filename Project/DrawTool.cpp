@@ -24,6 +24,6 @@ void DrawTool::setState(std::vector<Line*> &lines, bool state, int x, int y) {
         ghost_line->setStartPoint(x, y);
     } else {
         lines.push_back(new Line(ghost_line->getStartPoint()->getX(), ghost_line->getStartPoint()->getY(), ghost_line->getEndPoint()->getX(), ghost_line->getEndPoint()->getY()));
-        std::cout << "pushing";
+        // std::cout << "pushing";
     }
 } 

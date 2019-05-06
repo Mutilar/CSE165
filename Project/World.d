@@ -1,2 +1,2 @@
 World.o: World.cpp World.h Player.h WorldObject.h Point.h Line.h \
- DrawTool.h Camera.h
+ TexRect.h Rect.h SOIL/includes/SOIL.h DrawTool.h Camera.h

@@ -24,7 +24,7 @@ private:
 public:
     Game();
     void draw();
-    void step();
+    void step(bool state);
     //void click();
 
     void mouseDown(int b, int s, int x, int y);

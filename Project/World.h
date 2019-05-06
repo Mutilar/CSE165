@@ -28,7 +28,7 @@ protected:
 public:
     World();
     void draw();
-    void step();
+    void step(bool state);
 
 
     DrawTool* getDrawTool();

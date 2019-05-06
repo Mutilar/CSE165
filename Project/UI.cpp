@@ -3,12 +3,12 @@
 
 UI::UI()
 {
-  pen = new TexRect("images/pencil-alt-solid.png", 400, 2000, 75, 75);
-  line = new TexRect("images/pen-solid.png", 600, 2000, 75, 75);
-  eraser = new TexRect("images/eraser-solid.png", 800, 2000, 75, 75);
-  select = new TexRect("images/mouse-pointer-solid.png", 1000, 2000, 75, 75); 
-  move = new TexRect("images/expand-arrows-alt-solid.png", 1200, 2000, 75, 75);
-  zoom = new TexRect("images/search-solid.png", 1400, 2000, 75, 75);
+  pen = new TexRect("images/pencil-alt-solid.png", 675, 1950, 50, 50);
+  line = new TexRect("images/pen-solid.png", 775, 1950, 50, 50);
+  eraser = new TexRect("images/eraser-solid.png", 875, 1950, 50, 50);
+  select = new TexRect("images/mouse-pointer-solid.png", 975, 1950, 50, 50); 
+  move = new TexRect("images/expand-arrows-alt-solid.png", 1075, 1950, 50, 50);
+  zoom = new TexRect("images/search-solid.png", 1175, 1950, 50, 50);
 
   blue = new Tool();
   red = new Tool();
@@ -26,9 +26,9 @@ void UI::draw()
 
   // bottom left :: (0,0)
   // top right :: (2480, 2000)
-  float blue_points[] = {700, 1800, 50};
-  float red_points[] = {900, 1800, 50};
-  float green_points[] = {1100, 1800, 50};
+  float blue_points[] = {850, 1850, 25};
+  float red_points[] = {950, 1850, 25};
+  float green_points[] = {1050, 1850, 25};
 
   pen->draw(1.0);
   line->draw(1.0);
