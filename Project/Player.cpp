@@ -112,32 +112,6 @@ bool Player::IsIntersecting(Point *a, Point *b, Point *c, Point *d)
 	return (r >= 0 && r <= 1) && (s >= 0 && s <= 1);
 }
 
-void Player::drawSet(int *points, int num_points, Point *camera_position, int r, int g, int b)
-{
-	glColor3f(r, g, b);
-	glBegin(GL_POLYGON);
-	int min_x = points[0], min_y = points[1], max_x = points[0], max_y = points[1];
-	for (int i = 0; i < num_points; i += 2)
-	{
-		if (points[i] < min_x)
-			min_x = points[i];
-		if (points[i] > max_x)
-			max_x = points[i];
-
-		if (points[i + 1] < min_y)
-			min_y = points[i + 1];
-		if (points[i + 1] > max_y)
-			max_y = points[i + 1];
-
-		float x = points[i] - 150; //246/2;
-		float y = 300 - points[i + 1];
-		Point *relative_point = this->toRelativeSpace(new Point(x, y));
-		glVertex2f(camera_position->getX() + relative_point->getX(), camera_position->getY() + relative_point->getY());
-	}
-	// std::cout << "min: " << min_x << "," << min_y << "; max: " << max_x << ", " << max_y << "\n";
-	glEnd();
-}
-
 Point *Player::toRelativeSpace(Point *point)
 {
 	return new Point(this->getPositionX() + cos(rotation) * point->getX() + sin(rotation) * point->getY(), this->getPositionY() + -sin(rotation) * point->getX() + cos(rotation) * point->getY());
@@ -150,14 +124,12 @@ Line *Player::toRelativeSpace(Line *line)
 
 void Player::draw(Point *camera_position)
 {
-
 	PlayerBody = new TexRect("images/player.png", camera_position->getX() + this->getPositionX() - 150, camera_position->getY() + this->getPositionY() + 220, 300, 300);
 	PlayerBody->draw(1.0);
 }
 
 void Player::drawRaycast(Point *start, Point *end, Point *camera_position)
 {
-
 	glColor3f(0, 1, 0);
 	glBegin(GL_LINES);
 	glVertex2f(start->getX() + camera_position->getX(), start->getY() + camera_position->getY());

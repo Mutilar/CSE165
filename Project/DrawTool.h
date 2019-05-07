@@ -15,10 +15,7 @@ public:
     DrawTool();
     void draw(std::vector<Line*> lines, Point* camera_position); 
     void drag (int x, int y, Point* camera_position);
-
     void setState(std::vector<Line*> &lines, bool state, int x, int y, Point* camera_position); 
-
-    
 };
 
 #endif

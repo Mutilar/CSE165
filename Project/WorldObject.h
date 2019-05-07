@@ -18,7 +18,6 @@ protected:
   Point *position;
 
 public:
-  //  virtual void draw();n
   Point *getPosition();
   float getPositionX();
   float getPositionY();

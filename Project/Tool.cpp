@@ -19,12 +19,6 @@ void Tool::draw(float *points, int num_points, Point *camera_position, float r, 
 {
 	glColor3f(r, g, b);
 
-	// std::cout<< num_points << "\n";
-
-	// for (int i = 0; i < num_points; i++) {
-	// 	std::cout << points[i] << "\n";
-	// }
-
 	switch (num_points)
 	{
 	case 2:

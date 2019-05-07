@@ -38,15 +38,11 @@ void Game::mouseDown(int b, int s, int x, int y)
 		world->setDrawState(!s, x, y);
 		// }
 	}
-
-	//
-	//glutPostRedisplay();
 }
 
 void Game::mouseDrag(int x, int y)
 {
 	world->getDrawTool()->drag(x, y, world->getCamera());
-	//glutPostRedisplay();
 }
 
 void Game::moveCamera(char input) {

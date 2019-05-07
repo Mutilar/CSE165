@@ -22,19 +22,14 @@ protected:
     Player* player;
     DrawTool* draw_tool;
     Camera* camera;
-
     std::vector<Line*> lines;
     
 public:
     World();
     void draw();
     void step(bool state);
-
     void moveCamera(char input);
-
     Point* getCamera();
-
-
     DrawTool* getDrawTool();
     std::vector<Line*> getLines();
     void setDrawState (bool state, int x, int y);    

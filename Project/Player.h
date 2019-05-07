@@ -25,21 +25,15 @@ class Player : public WorldObject
     Line *ground_check_ray;
     TexRect* PlayerBody;
 
-    void drawSet(int *points, int num_points, Point *camera_position, int r, int g, int b);
-
   public:
     Player();
     Point getPosition();
-    // void setPosition(Point position);
     void draw(Point *camera_position);
-    void step(std::vector<Line *> &lines); //adjusts rotation, velocity based on raycasts
-    
+    void step(std::vector<Line *> &lines);
     Line* getIntersectingLine(std::vector<Line *> &lines, Line* ray);
-
     bool IsIntersecting(Line* a, Line* b);
     bool IsIntersecting(Point *a, Point *b, Point *c, Point *d);
     void drawRaycast(Point *start, Point *end, Point *camera_position);
-
     Point* toRelativeSpace(Point *point);
     Line* toRelativeSpace(Line *line);
 };

@@ -110,12 +110,7 @@ void appMouseFunc(int b, int s, int x, int y)
 	float my = (float)y;
 
 	windowToScene(mx, my);
-
-	// cout << "button: " << b << endl;
-	// cout << "state: " << s << endl;
-	// cout << "x: " << mx << endl;
-	// cout << "y: " << my << endl;
-
+	
 	game->mouseDown(b, s, (int)mx, 2000 - (int)my);
 }
 
@@ -166,7 +161,12 @@ void appKeyboardFunc(unsigned char key, int x, int y)
 	case 's':
 	case 'd':
 		game->moveCamera(key);
-		cout << "moving camera" << endl;
+		break;
+	case 'e':
+		//set eraser... should be done in UI buttons
+		break;
+	case 'q':
+		//set line draw... should be done in UI buttons
 		break;
 	}
 	glutPostRedisplay();

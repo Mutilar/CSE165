@@ -18,20 +18,15 @@ class Game
 private:
     World *world;
     UI *ui;
-
     bool is_paused;
 
 public:
     Game();
     void draw();
     void step(bool state);
-    //void click();
-
     void moveCamera(char input);
-
     void mouseDown(int b, int s, int x, int y);
     void mouseDrag(int x, int y);
-
     void togglePause();
 };
 

@@ -10,15 +10,10 @@ World::World()
 
 void World::draw()
 {
-
    // White Background
    glClearColor(1.0, 1.0, 1.0, 1.0);
-
-
    draw_tool->draw(this->lines, camera->getPosition());
-
    player->draw(camera->getPosition());
-   // camera->setPosition(camera->getPosition()->getX() + 1, 100);
 }
 
 DrawTool *World::getDrawTool()
@@ -31,7 +26,6 @@ void World::step(bool state)
    if (state)
    {
       player->step(this->lines);
-      camera->step();
    }
 }
 

@@ -5,14 +5,6 @@ Camera::Camera() {
 
 }
 
-void Camera::draw() {
-	
-}
-void Camera::step() {
-    
-}
-
-
 
 
 
