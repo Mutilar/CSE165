@@ -151,7 +151,7 @@ Line *Player::toRelativeSpace(Line *line)
 void Player::draw(Point *camera_position)
 {
 
-	PlayerBody = new TexRect("images/player.png", this->getPositionX() - 150, this->getPositionY() + 220, 300, 300);
+	PlayerBody = new TexRect("images/player.png", camera_position->getX() + this->getPositionX() - 150, camera_position->getY() + this->getPositionY() + 220, 300, 300);
 	PlayerBody->draw(1.0);
 }
 

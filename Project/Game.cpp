@@ -31,7 +31,6 @@ void Game::mouseDown(int b, int s, int x, int y)
 {
 	if (b == GLUT_LEFT_BUTTON)
 	{
-
 		//Check for if clicked on UI element
 
 		//else {
@@ -46,6 +45,10 @@ void Game::mouseDown(int b, int s, int x, int y)
 
 void Game::mouseDrag(int x, int y)
 {
-	world->getDrawTool()->drag(x, y);
+	world->getDrawTool()->drag(x, y, world->getCamera());
 	//glutPostRedisplay();
+}
+
+void Game::moveCamera(char input) {
+	world->moveCamera(input);
 }

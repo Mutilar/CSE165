@@ -150,7 +150,6 @@ void appKeyboardFunc(unsigned char key, int x, int y)
 		exit(0);
 		break;
 	case ' ':
-		// TODO: restart game and make a new blank drawing board
 		game = new Game();
 		cout << "restarting the world" << endl;
 		break;
@@ -166,13 +165,10 @@ void appKeyboardFunc(unsigned char key, int x, int y)
 	case 'a':
 	case 's':
 	case 'd':
-		// TODO: check for arrow, wasd keys to shift camera position manually (versus staying on player)
-		// camera->rePosition();
+		game->moveCamera(key);
 		cout << "moving camera" << endl;
 		break;
 	}
-
-	// After all the state changes, redraw the scene
 	glutPostRedisplay();
 }
 
@@ -198,9 +194,7 @@ int main(int argc, char **argv)
 	game = new Game();
 	timer(0);
 
-	// glutSetOption(GLUT_MULTISAMPLE, 8);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH | GLUT_MULTISAMPLE);
-
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_POINT_SMOOTH);
 	glEnable(GL_LINE_SMOOTH);

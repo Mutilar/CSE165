@@ -30,6 +30,10 @@ public:
     void draw();
     void step(bool state);
 
+    void moveCamera(char input);
+
+    Point* getCamera();
+
 
     DrawTool* getDrawTool();
     std::vector<Line*> getLines();

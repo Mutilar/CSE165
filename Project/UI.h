@@ -32,8 +32,6 @@ public:
   UI();
   void draw();
 
-  DrawTool* getDrawTool();
-  std::vector<Line *> getLines();
   void setDrawState(bool state, int x, int y);
 };
 

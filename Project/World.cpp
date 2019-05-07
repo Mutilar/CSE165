@@ -42,5 +42,30 @@ std::vector<Line *> World::getLines()
 
 void World::setDrawState(bool state, int x, int y)
 {
-   this->draw_tool->setState(this->lines, state, x, y);
+   this->draw_tool->setState(this->lines, state, x, y, camera->getPosition());
+}
+
+
+void World::moveCamera(char input) {
+	switch (input) {
+      case 'w':
+      this->camera->shift(new Point(0,-100));
+      break;
+      case 'a':
+      this->camera->shift(new Point(100,0));
+      break;
+      case 's':
+      this->camera->shift(new Point(0,100));
+      break;
+      case 'd':
+      this->camera->shift(new Point(-100,0));
+      break;
+   }
+   
+
+}
+
+
+Point* World::getCamera() {
+   return this->camera->getPosition();
 }

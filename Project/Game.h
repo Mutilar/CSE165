@@ -27,6 +27,8 @@ public:
     void step(bool state);
     //void click();
 
+    void moveCamera(char input);
+
     void mouseDown(int b, int s, int x, int y);
     void mouseDrag(int x, int y);
 
