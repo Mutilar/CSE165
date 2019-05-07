@@ -14,10 +14,10 @@ void World::draw()
    // White Background
    glClearColor(1.0, 1.0, 1.0, 1.0);
 
-   player->draw(camera->getPosition());
 
    draw_tool->draw(this->lines, camera->getPosition());
 
+   player->draw(camera->getPosition());
    // camera->setPosition(camera->getPosition()->getX() + 1, 100);
 }
 

@@ -15,9 +15,10 @@
 using namespace std;
 
 // Store the width and height of the window
-int width = 1280, height = 1960;
+int width = 2000, height = 2000;
 
 Game *game;
+bool is_running = true;
 
 void appDrawScene()
 {
@@ -154,13 +155,11 @@ void appKeyboardFunc(unsigned char key, int x, int y)
 		cout << "restarting the world" << endl;
 		break;
 	case 'p':
-		// TODO: implement pause
-		game->step(false);
+		is_running = false;
 		cout << "pausing the game" << endl;
 		break;
 	case 'o':
-		// TODO: implement unpause
-		game->step(true);
+		is_running = true;
 		cout << "unpausing the game" << endl;
 		break;
 	case 'w':
@@ -181,7 +180,7 @@ void idle() {}
 
 void timer(int id)
 {
-	game->step(true);
+	game->step(is_running);
 	game->draw();
 	glutTimerFunc(50, timer, id);
 }
