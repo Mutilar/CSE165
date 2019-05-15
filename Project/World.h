@@ -20,11 +20,12 @@ class World {
 
 protected:
     Player* player;
-    DrawTool* draw_tool;
     Camera* camera;
     std::vector<Line*> lines;
     
 public:
+
+    DrawTool* draw_tool;
     World();
     void draw();
     void step(bool state);

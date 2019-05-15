@@ -34,8 +34,9 @@ void Player::step(std::vector<Line *> &lines)
 	}
 	if (middle_hit)
 	{
-		//std::cout << "Grounded, on slope " << slope_contacted << "\n";
+		// std::cout << "Grounded, on slope " << slope_contacted << "\n";
 		this->velocity->shiftX(-slope_contacted);
+
 		// this->velocity->setY(-slope_contacted);
 	}
 	else
@@ -44,6 +45,9 @@ void Player::step(std::vector<Line *> &lines)
 	}
 
 	this->shift(this->velocity);
+
+	if (this->getPositionY() < -100) std::cout << "You Lose!\n";
+	else if (this->velocity->getX() > 100) std::cout << "You win!\n";
 
 	while (true)
 	{

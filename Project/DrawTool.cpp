@@ -34,9 +34,9 @@ void DrawTool::setState(std::vector<Line *> &lines, bool state, int x, int y, Po
             {
                 Line *line = *it;
 
-                float denominator = ((b->getX() - a->getX()) * (d->getY() - c->getY())) - ((b->getY() - a->getY()) * (d->getX() - c->getX()));
-                float numerator1 = ((a->getY() - c->getY()) * (d->getX() - c->getX())) - ((a->getX() - c->getX()) * (d->getY() - c->getY()));
-                float numerator2 = ((a->getY() - c->getY()) * (b->getX() - a->getX())) - ((a->getX() - c->getX()) * (b->getY() - a->getY()));
+                float denominator = ((ghost_line->getEndPoint()->getX() - ghost_line->getStartPoint()->getX()) * (line->getEndPoint()->getY() - line->getStartPoint()->getY())) - ((ghost_line->getEndPoint()->getY() - ghost_line->getStartPoint()->getY()) * (line->getEndPoint()->getX() - line->getStartPoint()->getX()));
+                float numerator1 = ((ghost_line->getStartPoint()->getY() - line->getStartPoint()->getY()) * (line->getEndPoint()->getX() - line->getStartPoint()->getX())) - ((ghost_line->getStartPoint()->getX() - line->getStartPoint()->getX()) * (line->getEndPoint()->getY() - line->getStartPoint()->getY()));
+                float numerator2 = ((ghost_line->getStartPoint()->getY() - line->getStartPoint()->getY()) * (ghost_line->getEndPoint()->getX() - ghost_line->getStartPoint()->getX())) - ((ghost_line->getStartPoint()->getX() - line->getStartPoint()->getX()) * (ghost_line->getEndPoint()->getY() - ghost_line->getStartPoint()->getY()));
 
                 if (denominator == 0)
                     if (numerator1 == 0 && numerator2 == 0)

@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <iostream>
 
 Game::Game()
 {
@@ -37,8 +38,8 @@ void Game::mouseDown(int b, int s, int x, int y)
 			if (y > 1950 - 50 && y < 1950 + 50)
 			{
 				is_on_ui = true;
-				cout << "Selected Pencil....\n";
-				world.draw_tool.erasing = false;
+				std::cout << "Selected Pencil....\n";
+				world->draw_tool->erasing = false;
 			}
 		}
 		if (x > 875 - 50 && x < 875 + 50)
@@ -46,8 +47,8 @@ void Game::mouseDown(int b, int s, int x, int y)
 			if (y > 1950 - 50 && y < 1950 + 50)
 			{
 				is_on_ui = true;
-				cout << "Selected Eraser....\n";
-				world.draw_tool.erasing = true;
+				std::cout << "Selected Eraser....\n";
+				world->draw_tool->erasing = true;
 			}
 		}
 		if (!is_on_ui)
