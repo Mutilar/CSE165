@@ -31,12 +31,29 @@ void Game::mouseDown(int b, int s, int x, int y)
 {
 	if (b == GLUT_LEFT_BUTTON)
 	{
-		//Check for if clicked on UI element
-
-		//else {
-
-		world->setDrawState(!s, x, y);
-		// }
+		bool is_on_ui = false;
+		if (x > 775 - 50 && x < 775 + 50)
+		{
+			if (y > 1950 - 50 && y < 1950 + 50)
+			{
+				is_on_ui = true;
+				cout << "Selected Pencil....\n";
+				world.draw_tool.erasing = false;
+			}
+		}
+		if (x > 875 - 50 && x < 875 + 50)
+		{
+			if (y > 1950 - 50 && y < 1950 + 50)
+			{
+				is_on_ui = true;
+				cout << "Selected Eraser....\n";
+				world.draw_tool.erasing = true;
+			}
+		}
+		if (!is_on_ui)
+		{
+			world->setDrawState(!s, x, y);
+		}
 	}
 }
 
@@ -45,6 +62,7 @@ void Game::mouseDrag(int x, int y)
 	world->getDrawTool()->drag(x, y, world->getCamera());
 }
 
-void Game::moveCamera(char input) {
+void Game::moveCamera(char input)
+{
 	world->moveCamera(input);
 }

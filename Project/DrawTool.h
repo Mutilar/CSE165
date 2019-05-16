@@ -11,7 +11,13 @@ private:
     bool state;
     int start_x, start_y, current_x, current_y;
 
+   
+
 public:
+
+ 
+    bool erasing;
+    
     DrawTool();
     void draw(std::vector<Line*> lines, Point* camera_position); 
     void drag (int x, int y, Point* camera_position);
