@@ -1,1 +1,2 @@
-# Repository for CSE 165 (Object Oriented Programming)
+# CSE165
+Work for CSE165: Intro to Object Oriented Programming
