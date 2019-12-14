@@ -1,2 +1,1 @@
-# CSE165
-Work for CSE165: Intro to Object Oriented Programming
+# Coursework for CSE165: Object Oriented Programming
